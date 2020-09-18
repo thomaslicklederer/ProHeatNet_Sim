@@ -25,7 +25,7 @@ plt.close(fig='all')
 ############################ general parameters ############################
 
 myfigsize = [2*20.0/2.54, 2*10.0/2.54]
-myfigsize2= [2*10.0/2.54, 2*10.0/2.54]
+myfigsize2= [2*12.0/2.54, 2*10.0/2.54]
 myfontsize = 20
 mythickness = 5
 mylinestyles = [':', '-.', '--', '-']
@@ -326,18 +326,20 @@ if show_valve == True:
     plt.figure(num='Ventil', figsize=myfigsize2)
     
     for i in range(len(kappa_test)):
-        plt.plot(dotV_vec_test, Deltap_valve[:,i], label=''.join((r'$\kappa$=',str(kappa_test[i]))),\
+        indices = Deltap_valve[:,i]>=-1000
+        printDeltap = Deltap_valve[indices,i]
+        plt.plot(dotV_vec_test[indices], printDeltap, label=''.join((r'$\kappa$=',str(kappa_test[i]))),\
         linewidth=mythickness, linestyle=mylinestyles[i], color=mylinecolors[i])
         
     #plt.plot(dotV_vec_test, np.zeros(len(dotV_vec_test)), color = 'k', linewidth=mythickness)
     my_set_ticks4(dotV_vec_test, Deltap_valve)
     plt.title('control valve model curve', fontsize=myfontsize, fontweight='bold')
-    
-    plt.gca().set_xlabel(r'volume flow $\dot{V}\/\left[ \frac{l}{min}\right]$', fontsize=myfontsize)
-    plt.gca().set_ylabel(r'pressure head $\Delta p\/\left[hPa\right]$', fontsize=myfontsize)
+   
     plt.gca().set_ylim(ymax=+10)
     plt.gca().set_ylim(ymin=-1000)
     plt.tick_params(axis='both', labelsize=myfontsize)
+    plt.gca().set_xlabel(r'volume flow $\dot{V}\/\left[ \frac{l}{min}\right]$', fontsize=myfontsize)
+    plt.gca().set_ylabel(r'pressure head $\Delta p\/\left[hPa\right]$', fontsize=myfontsize, labelpad=-20)
     plt.legend(fontsize = 0.8*myfontsize)
     # secax = plt.gca().secondary_xaxis('top', functions=(lambda x: x*60, lambda x: x/60))
     # secax.set_xlabel(r'volume flux $\dot{V}\/\left[ \frac{l}{min}\right]$', fontsize=myfontsize)
