@@ -304,7 +304,7 @@ if show_pump == True:
         
     #plt.plot(dotV_vec_test, np.zeros(len(dotV_vec_test)), color = 'k', linewidth=mythickness)
     
-    plt.title('pump curve', fontsize=myfontsize, fontweight='bold')
+    plt.title('pump model curve', fontsize=myfontsize, fontweight='bold')
     
     plt.gca().set_xlabel(r'volume flow $\dot{V}\/\left[ \frac{l}{min}\right]$', fontsize=myfontsize)
     plt.gca().set_ylabel(r'pressure increase by pump $\Delta p\/\left[hPa\right]$', fontsize=myfontsize)
@@ -331,7 +331,7 @@ if show_valve == True:
         
     #plt.plot(dotV_vec_test, np.zeros(len(dotV_vec_test)), color = 'k', linewidth=mythickness)
     my_set_ticks4(dotV_vec_test, Deltap_valve)
-    plt.title('control valve curve', fontsize=myfontsize, fontweight='bold')
+    plt.title('control valve model curve', fontsize=myfontsize, fontweight='bold')
     
     plt.gca().set_xlabel(r'volume flow $\dot{V}\/\left[ \frac{l}{min}\right]$', fontsize=myfontsize)
     plt.gca().set_ylabel(r'pressure head $\Delta p\/\left[hPa\right]$', fontsize=myfontsize)
@@ -399,8 +399,8 @@ if show_pipe_th == True:
     
 if show_hx == True:
     
-    #mysuptitle = r'heatexchanger'
-    #fig.suptitle(mysuptitle, fontsize=myfontsize, fontweight='bold')
+    mysuptitle = r'heatexchanger model curves'
+    
     
     # outlet temperatures over varying inlet temperatures with fixed volume flows
     X,Y = np.meshgrid(T_in_hx_test-273.15, T_in_hx_test-273.15)
@@ -411,13 +411,14 @@ if show_hx == True:
     cmap = mpl.cm.coolwarm
     mynorm = mpl.colors.Normalize(vmin=myMin, vmax=myMax)
     fig = plt.figure(num='Waermetauscher', figsize=myfigsize)
+    fig.suptitle(mysuptitle, fontsize=myfontsize, fontweight='bold')
 
     ax1 = fig.add_subplot(1,2,1, projection='3d')
     surf1 = ax1.plot_surface(X,Y,Z1-273.15,cmap=cmap, norm=mynorm, linewidth=0,antialiased=True)
     ax1.view_init(elev=15, azim=45)
     plt.tick_params(axis='both', labelsize=myfontsize)
     description1 = r'$\dot{V}_{HTNW}= %8.1f \frac{l}{min},\/\dot{V}_{PSM}= %8.1f \frac{l}{min}$'%(dotV_HTNW_const_test, dotV_PSM_const_test)
-    plt.title('over vayring inlet temperatures\n'+ description1, fontsize=myfontsize, fontweight='bold')
+    plt.title('varying inlet temperatures\n'+ description1, fontsize=myfontsize, fontweight='bold')
     plt.gca().set_xlabel(r'$T_{HTNW,in}\/\left[ ^\circ C\right]$', fontsize=myfontsize, labelpad=mylabelpad)
     plt.gca().set_ylabel(r'$T_{PSM,in}\/\left[ ^\circ C\right]$', fontsize=myfontsize, labelpad=mylabelpad)
     plt.gca().set_zlabel(r'$T_{PSM,out}\/\left[^\circ C\right]$', fontsize=myfontsize)
@@ -432,7 +433,7 @@ if show_hx == True:
     my_set_ticks(X,Y)
     plt.tick_params(axis='both', labelsize=myfontsize)
     description2 = r'$\vartheta_{HTNW,in}= %8.1f ^\circ C,\/\vartheta_{PSM,in}= %8.1f ^\circ C$'%(T_in_HTNW_const_test -273.15, T_in_PSM_const_test -273.15)
-    plt.title('over varying volume flows\n' + description2, fontsize=myfontsize, fontweight='bold')
+    plt.title('varying volume flows\n' + description2, fontsize=myfontsize, fontweight='bold')
     plt.gca().set_xlabel(r'$\dot{V}_{HTNW}\/\left[ \frac{l}{min}\right]$', fontsize=myfontsize, labelpad=mylabelpad)
     plt.gca().set_ylabel(r'$\dot{V}_{PSM}\/\left[ \frac{l}{min}\right]$', fontsize=myfontsize, labelpad=mylabelpad)
     plt.gca().set_zlabel(r'$T_{PSM,out}\/\left[^\circ C\right]$', fontsize=myfontsize)
