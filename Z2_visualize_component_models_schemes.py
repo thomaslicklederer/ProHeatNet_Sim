@@ -25,7 +25,7 @@ plt.close(fig='all')
 ############################ general parameters ############################
 
 myfigsize = [2*20.0/2.54, 2*10.0/2.54]
-myfigsize2= [2*12.0/2.54, 2*10.0/2.54]
+myfigsize2= [2*10.0/2.54, 2*10.0/2.54]
 myfontsize = 20
 mythickness = 5
 mylinestyles = [':', '-.', '--', '-']
