@@ -15,6 +15,7 @@ import B_setup as su
 import C_network as net
 import E_hydraulic_model as hm
 import F_thermal_model as tm
+import G_visualization as vis
 
 ################ delete old data #########################
 get_ipython().magic('reset -f')
@@ -65,6 +66,9 @@ th_model.do_some_calculations()
 mysolutions = th_model.save_solution()
 
 ############################################################################
+
+############################ print solution in console #####################
+
 pprint(vars(mysetup))
 pprint(mysolutions)
 
@@ -75,7 +79,21 @@ for key in mysolutions['Q_trnsf'].keys():
     
 print('sum: ', sum)
 
+############################################################################
 
+############################ visualization #################################
+
+# graph
+vis.visualize_graph(mysetup, mygraph, mysolutions)
+
+# scenario
+vis.visualize_scenario(mysetup, mygraph, mysolutions)
+
+# hydraulic solution
+
+# thermal solution
+
+############################################################################
 
 
 
