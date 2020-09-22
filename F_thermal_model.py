@@ -50,6 +50,7 @@ class th_prob:
         self.DeltaT_solvec = self.C_mat * self.T_solvec
 
         self.Q_trnsf = {}
+        self.Q_loss = {}
         
 
         index = []
@@ -63,13 +64,32 @@ class th_prob:
                 raise ValueError('too many indices')
             dT = self.DeltaT_solvec[index]
             self.Q_trnsf[edge] = self.setup.myfluid.rho * self.setup.myfluid.cp * 1/60 * V * dT
+        
+        index = []
+        for edge in self.setup.e_vec:
+            V = self.solution_dict['dotV'][edge]
+            index = []
+            for i in range(len(self.general_stuff['dotV_vec'])):
+                if self.general_stuff['dotV_vec'][i] == edge:
+                    index.append(i)
+            if len(index) > 1:
+                raise ValueError('too many indices')
+            dT = self.DeltaT_solvec[index]
+            print('V ', V)
+            print('dT ', dT)
+            
+            self.Q_loss[edge] = self.setup.myfluid.rho * self.setup.myfluid.cp * 1/60 * V * dT
+            print('Q_loss ', self.Q_loss[edge])
             
             
     def save_solution(self):
+        Edges_Temps_dict = self.general_stuff['Edges_Temps_dict']
         
         for P in self.Q_trnsf.keys():
-        
             self.solution_dict['Q_trnsf'][P] = float(self.Q_trnsf[P])
+            
+        for k in self.Q_loss.keys():
+            self.solution_dict['Q_loss'][k] = float(self.Q_loss[k])
 
         for i in range(len(self.general_stuff['T_vec'])):
             name = self.general_stuff['T_vec'][i]
@@ -78,7 +98,7 @@ class th_prob:
             
         for i in range(len(self.general_stuff['dotV_vec'])):
             name = self.general_stuff['dotV_vec'][i]
-            value = self.T_solvec[i]
+            value = self.DeltaT_solvec[i]
             self.solution_dict['DeltaT'][name] = value
             
         return self.solution_dict

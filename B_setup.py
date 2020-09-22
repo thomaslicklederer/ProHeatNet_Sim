@@ -95,12 +95,16 @@ class setup:
         # transferred heat for prosumers
         Q_trnsf = {}
         
+        # heat losses in pipes
+        Q_loss = {}
+        
         solutions = {}
         solutions['dotV']   = dotV
         solutions['Deltap'] = Deltap
         solutions['T'] = T
         solutions['DeltaT'] = DeltaT
         solutions['Q_trnsf'] = Q_trnsf
+        solutions['Q_loss'] = Q_loss
         
         for i in self.PSM:
             solutions['dotV'][i] = self.scenario[i]['dotV_sec_in']
