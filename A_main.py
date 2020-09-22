@@ -58,12 +58,14 @@ mysolutions = hy_model.save_solution()
 ############################################################################
 
 ############################ thermal model #################################
-
-th_model = tm.th_prob(mysetup, mygraph, mysolutions)
-th_model.problem_formulation()
-th_model.solve()
-th_model.do_some_calculations()
-mysolutions = th_model.save_solution()
+try:
+    th_model = tm.th_prob(mysetup, mygraph, mysolutions)
+    th_model.problem_formulation()
+    th_model.solve()
+    th_model.do_some_calculations()
+    mysolutions = th_model.save_solution()
+except:
+    pass
 
 ############################################################################
 
@@ -72,17 +74,26 @@ mysolutions = th_model.save_solution()
 pprint(vars(mysetup))
 pprint(mysolutions)
 
-sum = 0
-sum2 = 0
 
-for key in mysolutions['Q_trnsf'].keys():
-    sum += mysolutions['Q_trnsf'][key]
+try:
+    sum = 0
+    sum2 = 0
+    sum3 = 0
 
-for key in mysolutions['Q_loss'].keys():
-    sum2 += abs(mysolutions['Q_loss'][key])
-    
-print('sum: ', sum)
-print('sum2: ', sum2)
+    for key in mysolutions['Q_trnsf'].keys():
+        sum += mysolutions['Q_trnsf'][key]
+        
+    for key in mysolutions['Q_trnsf2'].keys():
+        sum2 += mysolutions['Q_trnsf2'][key]
+
+    for key in mysolutions['Q_loss'].keys():
+        sum3 += abs(mysolutions['Q_loss'][key])
+        
+    print('sum_trnsf1: ', sum)
+    print('sum_trnsf2: ', sum2)
+    print('sum_loss: ', sum3)
+except:
+    pass
 
 ############################################################################
 
@@ -98,7 +109,7 @@ vis.visualize_scenario(mysetup, mygraph, mysolutions)
 vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, withnumbers = True)
 
 # thermal solution
-vis.visualize_th_solution(mysetup, mygraph, mysolutions, th_model, withsymbols = True, withnumbers = True)
+vis.visualize_th_solution(mysetup, mygraph, mysolutions, th_model, withsymbols = False, withnumbers = True)
 
 ############################################################################
 

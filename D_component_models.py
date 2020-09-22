@@ -309,17 +309,17 @@ class pipe:
         
         try:
             s_pi = (k_th_ir * math.pi * self.d_hy)/(dotV2*fluid.rho_SI * fluid.cp)
-        except:
-            s_pi = float('inf')
-        
-        b_pi_2 = 1
-        
-        try:
             b_pi_1 = -(1/math.cosh(s_pi*self.L))
             b_pi_3 = T_soil*(1-(1/math.cosh(s_pi*self.L)))
+            b_pi_2 = 1
+            
         except:
+            s_pi = float('inf')
             b_pi_1 = 0
             b_pi_3 = 0
+            b_pi_2 = 0
+            
+        print([b_pi_1, b_pi_2, b_pi_3])
                       
         return [b_pi_1, b_pi_2, b_pi_3]
                                                     

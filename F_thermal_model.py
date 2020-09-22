@@ -51,10 +51,10 @@ class th_prob:
 
         self.Q_trnsf = {}
         self.Q_loss = {}
+        self.Q_trnsf2 = {}
         
-
         index = []
-        for edge in self.setup.PSM:
+        for edge in self.setup.e_hc_vec:
             V = self.solution_dict['dotV'][edge]
             index = []
             for i in range(len(self.general_stuff['dotV_vec'])):
@@ -66,7 +66,7 @@ class th_prob:
             self.Q_trnsf[edge] = self.setup.myfluid.rho * self.setup.myfluid.cp * 1/60 * V * dT
         
         index = []
-        for edge in self.setup.e_vec:
+        for edge in self.setup.PSM:
             V = self.solution_dict['dotV'][edge]
             index = []
             for i in range(len(self.general_stuff['dotV_vec'])):
@@ -75,25 +75,44 @@ class th_prob:
             if len(index) > 1:
                 raise ValueError('too many indices')
             dT = self.DeltaT_solvec[index]
-            print('V ', V)
-            print('dT ', dT)
+            self.Q_trnsf2[edge] = self.setup.myfluid.rho * self.setup.myfluid.cp * 1/60 * V * dT
             
+        index = []
+        for edge in self.setup.e_h_vec:
+            V = self.solution_dict['dotV'][edge]
+            index = []
+            for i in range(len(self.general_stuff['dotV_vec'])):
+                if self.general_stuff['dotV_vec'][i] == edge:
+                    index.append(i)
+            if len(index) > 1:
+                raise ValueError('too many indices')
+            dT = self.DeltaT_solvec[index]
             self.Q_loss[edge] = self.setup.myfluid.rho * self.setup.myfluid.cp * 1/60 * V * dT
-            print('Q_loss ', self.Q_loss[edge])
             
+        index = []
+        for edge in self.setup.e_c_vec:
+            V = self.solution_dict['dotV'][edge]
+            index = []
+            for i in range(len(self.general_stuff['dotV_vec'])):
+                if self.general_stuff['dotV_vec'][i] == edge:
+                    index.append(i)
+            if len(index) > 1:
+                raise ValueError('too many indices')
+            dT = self.DeltaT_solvec[index]
+            self.Q_loss[edge] = self.setup.myfluid.rho * self.setup.myfluid.cp * 1/60 * V * dT
+
+        
             
     def save_solution(self):
-        Edges_Temps_dict = self.general_stuff['Edges_Temps_dict']
+        # Edges_Temps_dict = self.general_stuff['Edges_Temps_dict']
         
-        for P in self.Q_trnsf.keys():
-            self.solution_dict['Q_trnsf'][P] = float(self.Q_trnsf[P])
-            
-        for k in self.Q_loss.keys():
-            self.solution_dict['Q_loss'][k] = float(self.Q_loss[k])
+        self.solution_dict['Q_trnsf'] = self.Q_trnsf
+        self.solution_dict['Q_trnsf2'] = self.Q_trnsf2
+        self.solution_dict['Q_loss'] = self.Q_loss
 
         for i in range(len(self.general_stuff['T_vec'])):
             name = self.general_stuff['T_vec'][i]
-            value = self.T_solvec[i]
+            value = self.T_solvec[i]-273.15
             self.solution_dict['T'][name] = value
             
         for i in range(len(self.general_stuff['dotV_vec'])):
@@ -399,6 +418,10 @@ class th_prob:
                     if curTemp == T_out:
                         E2_mat[mycounter, i] = b_pi_2
                 R_vec[j] = b_pi_3
+            if temp_diff == ('1c','2c'):
+                print('hiiiiieeeer: ', [b_pi_1, b_pi_2, b_pi_3])
+                print(T_in)
+                print(T_out)
    
         E_mat = np.concatenate((E1_mat, E2_mat), axis=0)
         E_mat = sp.sparse.csc_matrix(E_mat)

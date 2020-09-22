@@ -239,7 +239,7 @@ if show_pipe_th == True:
     
     for i in range(len(T_in_pi_test)):
         T_in_now = '%8.1f' % (T_in_pi_test[i]-273.15)
-        plt.plot(dotV_vec_pith_test, T_out_pipe[:,i]-273.15, label=''.join((r'$T_{in}$=',T_in_now)), \
+        plt.plot(dotV_vec_pith_test, DeltaT_pipe[:,i], label=''.join((r'$T_{in}$=',T_in_now)), \
         linewidth=mythickness, linestyle=mylinestyles[i], color=mylinecolors[i])
     
     plt.title(''.join(('outlet temperature, ','L=',str(mypipe.L),'m')), fontsize=math.floor(myfontsize*0.9))

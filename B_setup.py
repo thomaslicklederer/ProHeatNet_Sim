@@ -94,6 +94,7 @@ class setup:
         
         # transferred heat for prosumers
         Q_trnsf = {}
+        Q_trnsf2 = {}
         
         # heat losses in pipes
         Q_loss = {}
@@ -104,6 +105,7 @@ class setup:
         solutions['T'] = T
         solutions['DeltaT'] = DeltaT
         solutions['Q_trnsf'] = Q_trnsf
+        solutions['Q_trnsf2'] = Q_trnsf2
         solutions['Q_loss'] = Q_loss
         
         for i in self.PSM:
