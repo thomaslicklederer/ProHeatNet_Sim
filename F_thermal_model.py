@@ -316,6 +316,8 @@ class th_prob:
                 if T_dict[ee_vec[j]][0]==self.setup.v_vec[i]:
                     temp_edge = T_dict[ee_vec[j]][1]
                     M_mat[i,j]=dotV_dict[temp_edge]*T_dict[ee_vec[j]][2]*rho
+
+
         # concatenate submatrix with zeros for temperatures on secondary prosumer side
         M_mat = np.concatenate((M_mat, np.zeros((len(self.setup.v_vec),len(T_sec_vec)))),axis=1)
         
@@ -337,13 +339,17 @@ class th_prob:
             temp=list(np.argwhere(M_mat_sign_tilde[row]==-1))
             temp = [int(i) for i in temp]
             relev_Ts.append(temp)
+        print('relev Ts',relev_Ts)
         L_mat = []
+        myctr = 0
         for i in range(len(relev_Ts)):
             node_Ts = relev_Ts[i]
             for j in range(1, len(node_Ts)):
+                print(myctr)
                 L_mat.append(list(np.zeros(M_mat_sign_tilde.shape[1])))
-                L_mat[i+j-1][node_Ts[0]]=-1
-                L_mat[i+j-1][node_Ts[j]]=1
+                L_mat[myctr][node_Ts[0]]=-1
+                L_mat[myctr][node_Ts[j]]=1
+                myctr += 1
         
         if L_mat == []:
             L_mat = np.zeros((1,np.shape(M_mat)[1]))
