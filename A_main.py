@@ -92,7 +92,7 @@ with open("results.txt", "w") as fout:
 vis.visualize_graph(mysetup, mygraph, mysolutions)
 
 # scenario
-vis.visualize_scenario(mysetup, mygraph, mysolutions)
+vis.visualize_scenario(mysetup, mygraph, mysolutions, withnumbers=True)
 
 # hydraulic solution
 vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, withnumbers = True, data = 'flow')

@@ -71,6 +71,6 @@ for prosumer in range(self.M):
     self.scenario[prosumer+1]['u']   =   u_vec[prosumer]
 self.scenario['T_soil'] = T_soil
 
-#self.scenario[1]['kappa']=0.4
+# self.scenario[4]['u'] = 1
 
         

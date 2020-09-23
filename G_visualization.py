@@ -63,7 +63,7 @@ def visualize_graph(setup, graph, solutions):
         
         plt.savefig(''.join((savepath, 'vis_graph.', saveformat)), format = saveformat)
     
-def visualize_scenario(setup, graph, solutions):
+def visualize_scenario(setup, graph, solutions, withnumbers=True):
         # initializations
         G = graph.G
         img_valve = mpimg.imread('figs/valve_img.png')
@@ -166,14 +166,15 @@ def visualize_scenario(setup, graph, solutions):
                             xpos_text_disp0a,ypos_text_disp0a))
                     coord_text_data0b=inv1.transform((
                             xpos_text_disp0b,ypos_text_disp0b))
-                    plt.text(coord_text_data0a[0], coord_text_data0a[1], dotm_sec_str, 
-                             horizontalalignment='left',
-                             verticalalignment='center',
-                             fontsize = myfontsize)
-                    plt.text(coord_text_data0b[0], coord_text_data0b[1], T_sec_str, 
-                             horizontalalignment='left',
-                             verticalalignment='center',
-                             fontsize = myfontsize)
+                    if withnumbers == True:
+                        plt.text(coord_text_data0a[0], coord_text_data0a[1], dotm_sec_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
+                        plt.text(coord_text_data0b[0], coord_text_data0b[1], T_sec_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
                     
                     if mu_dict[PSM]==1:
                         
@@ -188,10 +189,12 @@ def visualize_scenario(setup, graph, solutions):
                                                  pad=0,
                                                  frameon=False)
                         plt.gca().add_artist(ab_pump)
-                        plt.text(coord_text_data1[0], coord_text_data1[1], U_pump_str, 
-                             horizontalalignment='left',
-                             verticalalignment='center',
-                             fontsize = myfontsize)
+                        if withnumbers == True:
+                        
+                            plt.text(coord_text_data1[0], coord_text_data1[1], U_pump_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
                     elif mu_dict[PSM]== -1:
                         # position valve image
                         imagebox_valve = OffsetImage(img_valve, zoom=0.4)
@@ -211,14 +214,15 @@ def visualize_scenario(setup, graph, solutions):
                                                     #xycoords='axes fraction'
                         plt.gca().add_artist(ab_valve)
                         
-                        # position text for control value U
-                        xpos_text_disp2 = xpos_valve_disp+0.55*myExtend2[0]
-                        coord_text_data2=inv1.transform((
-                            xpos_text_disp2,coord_act_disp[1]))
-                        plt.text(coord_text_data2[0], coord_text_data2[1], U_valve_str, 
-                             horizontalalignment='left',
-                             verticalalignment='center',
-                             fontsize = myfontsize)
+                        if withnumbers == True:
+                            # position text for control value U
+                            xpos_text_disp2 = xpos_valve_disp+0.55*myExtend2[0]
+                            coord_text_data2=inv1.transform((
+                                xpos_text_disp2,coord_act_disp[1]))
+                            plt.text(coord_text_data2[0], coord_text_data2[1], U_valve_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
         
         plt.axis('off')
         plt.show(block=False)
