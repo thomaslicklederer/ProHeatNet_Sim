@@ -292,7 +292,7 @@ class pipe:
             dotV        volume flow [l/min]
             T_soil      constant temperature of surrounding soil [K]'''
         
-        dotV2 = abs(dotV)/60000
+        dotV2 = abs(dotV)*(1/60000)
         
         h_layers_rev = 0
         for i in range(self.N_layers):
@@ -318,8 +318,6 @@ class pipe:
             b_pi_1 = 0
             b_pi_3 = 0
             b_pi_2 = 0
-            
-        print([b_pi_1, b_pi_2, b_pi_3])
                       
         return [b_pi_1, b_pi_2, b_pi_3]
                                                     

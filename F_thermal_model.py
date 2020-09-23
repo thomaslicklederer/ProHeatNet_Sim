@@ -145,6 +145,7 @@ class th_prob:
     def general_stuff(self):
         
         self.general_stuff = {}
+        dotV_dict = self.solution_dict['dotV']
         
         import networkx as nx
         
@@ -232,6 +233,56 @@ class th_prob:
             PSM = i
             V = self.setup.scenario[i]['dotV_sec_in']
             dotV_sec_dict[PSM] = V
+            
+        # Edges_Temps_dict
+        Edges_Temps_dict={}
+        for prosumer in list(mu_dict.keys()):
+            Edges_Temps_dict[prosumer]={}
+            for i in range(len(T_vec)):
+                temp = T_vec[i]
+                if (str(prosumer) in temp[0]) and (str(prosumer) in temp[1]):
+                    if 'h' in temp[0]:
+                        if mu_dict[prosumer] == -1:
+                            Edges_Temps_dict[prosumer]['T_in_HTNW'] = temp
+                        if mu_dict[prosumer] == 1:
+                            Edges_Temps_dict[prosumer]['T_out_HTNW'] = temp
+                    if 'c' in temp[0]:
+                        if mu_dict[prosumer] == 1:
+                            Edges_Temps_dict[prosumer]['T_in_HTNW'] = temp
+                        if mu_dict[prosumer] == -1:
+                            Edges_Temps_dict[prosumer]['T_out_HTNW'] = temp
+                    try:
+                        Edges_Temps_dict[prosumer]['dotV_HTNW'] = dotV_dict[temp]
+                        Edges_Temps_dict[prosumer]['edge'] = temp
+                    except KeyError:
+                        pass
+                                
+                if (str(prosumer) in temp):                    
+                    if 'h' in temp:
+                        if mu_dict[prosumer] == 1:
+                            Edges_Temps_dict[prosumer]['T_in_PSM'] = temp
+                        if mu_dict[prosumer] == -1:
+                            Edges_Temps_dict[prosumer]['T_out_PSM'] = temp
+                    if 'c' in temp:                                
+                        if mu_dict[prosumer] == -1:
+                            Edges_Temps_dict[prosumer]['T_in_PSM'] = temp
+                        if mu_dict[prosumer] == 1:
+                            Edges_Temps_dict[prosumer]['T_out_PSM'] = temp
+                    Edges_Temps_dict[prosumer]['dotV_PSM'] = dotV_sec_dict[prosumer]
+
+        for temp_diff in DeltaT_vec:
+            if ('h' in temp_diff[0] and 'h' in temp_diff[1]) or ('c' in temp_diff[0] and 'c' in temp_diff [1]):
+                Edges_Temps_dict[temp_diff]={}
+                signum = np.sign(dotV_dict[temp_diff])
+                if signum == 1:
+                    Edges_Temps_dict[temp_diff]['T_in'] = temp_diff
+                    Edges_Temps_dict[temp_diff]['T_out'] = (temp_diff[1], temp_diff[0])
+                elif signum == -1:
+                    Edges_Temps_dict[temp_diff]['T_in'] = (temp_diff[1], temp_diff[0])
+                    Edges_Temps_dict[temp_diff]['T_out'] = temp_diff
+                Edges_Temps_dict[temp_diff]['dotV'] = dotV_dict[temp_diff]
+                Edges_Temps_dict[temp_diff]['edge'] = temp_diff
+
         
         # save stuff
         self.general_stuff['B_mat'] = B_mat
@@ -246,6 +297,7 @@ class th_prob:
         self.general_stuff['DeltaT_vec'] = DeltaT_vec
         self.general_stuff['mu_dict'] = mu_dict
         self.general_stuff['dotV_sec_dict'] = dotV_sec_dict
+        self.general_stuff['Edges_Temps_dict'] = Edges_Temps_dict
                         
     
     def capacity_flow_mat(self):
@@ -310,57 +362,10 @@ class th_prob:
         dotV_sec_dict = self.general_stuff['dotV_sec_dict']
         DeltaT_vec = self.general_stuff['DeltaT_vec']
         T_dict = self.general_stuff['T_dict']
+        Edges_Temps_dict = self.general_stuff['Edges_Temps_dict']
         
         R_vec = np.zeros(len(e_vec)+len(list(mu_dict.keys())))
-        Edges_Temps_dict={}
-        for prosumer in list(mu_dict.keys()):
-            Edges_Temps_dict[prosumer]={}
-            for i in range(len(T_vec)):
-                temp = T_vec[i]
-                if (str(prosumer) in temp[0]) and (str(prosumer) in temp[1]):
-                    if 'h' in temp[0]:
-                        if mu_dict[prosumer] == -1:
-                            Edges_Temps_dict[prosumer]['T_in_HTNW'] = temp
-                        if mu_dict[prosumer] == 1:
-                            Edges_Temps_dict[prosumer]['T_out_HTNW'] = temp
-                    if 'c' in temp[0]:
-                        if mu_dict[prosumer] == 1:
-                            Edges_Temps_dict[prosumer]['T_in_HTNW'] = temp
-                        if mu_dict[prosumer] == -1:
-                            Edges_Temps_dict[prosumer]['T_out_HTNW'] = temp
-                    try:
-                        Edges_Temps_dict[prosumer]['dotV_HTNW'] = dotV_dict[temp]
-                        Edges_Temps_dict[prosumer]['edge'] = temp
-                    except KeyError:
-                        pass
-                                
-                if (str(prosumer) in temp):                    
-                    if 'h' in temp:
-                        if mu_dict[prosumer] == 1:
-                            Edges_Temps_dict[prosumer]['T_in_PSM'] = temp
-                        if mu_dict[prosumer] == -1:
-                            Edges_Temps_dict[prosumer]['T_out_PSM'] = temp
-                    if 'c' in temp:                                
-                        if mu_dict[prosumer] == -1:
-                            Edges_Temps_dict[prosumer]['T_in_PSM'] = temp
-                        if mu_dict[prosumer] == 1:
-                            Edges_Temps_dict[prosumer]['T_out_PSM'] = temp
-                    Edges_Temps_dict[prosumer]['dotV_PSM'] = dotV_sec_dict[prosumer]
 
-        for temp_diff in DeltaT_vec:
-            if ('h' in temp_diff[0] and 'h' in temp_diff[1]) or ('c' in temp_diff[0] and 'c' in temp_diff [1]):
-                Edges_Temps_dict[temp_diff]={}
-                signum = np.sign(dotV_dict[temp_diff])
-                if signum == 1:
-                    Edges_Temps_dict[temp_diff]['T_in'] = temp_diff
-                    Edges_Temps_dict[temp_diff]['T_out'] = (temp_diff[1], temp_diff[0])
-                elif signum == -1:
-                    Edges_Temps_dict[temp_diff]['T_in'] = (temp_diff[1], temp_diff[0])
-                    Edges_Temps_dict[temp_diff]['T_out'] = temp_diff
-                Edges_Temps_dict[temp_diff]['dotV'] = dotV_dict[temp_diff]
-                Edges_Temps_dict[temp_diff]['edge'] = temp_diff
-        self.general_stuff['Edges_Temps_dict'] = Edges_Temps_dict
-                        
         ## E1_mat for the interconnecting edges
         E1_mat = np.zeros((2*len(list(mu_dict.keys())), len(list(T_dict.keys()))))
         mycounter = -2
@@ -390,8 +395,11 @@ class th_prob:
                     E1_mat[mycounter+1, i] = params_PSM['T_in_PSM']
                 elif curTemp == T_out_PSM:
                     E1_mat[mycounter, i] = params_HTNW['T_out_PSM']
-                    E1_mat[mycounter+1, i] = params_PSM['T_out_PSM']            
+                    E1_mat[mycounter+1, i] = params_PSM['T_out_PSM']
+            R_vec[mycounter] = 0
+            R_vec[mycounter+1] = 0
             
+
         ## E2_mat for the edges within the subnetworks
         E2_mat = np.zeros((len(e_vec)-len(list(mu_dict.keys())), len(list(T_dict.keys()))))
         mycounter = -1
@@ -417,11 +425,7 @@ class th_prob:
                         E2_mat[mycounter, i] = b_pi_1
                     if curTemp == T_out:
                         E2_mat[mycounter, i] = b_pi_2
-                R_vec[j] = b_pi_3
-            if temp_diff == ('1c','2c'):
-                print('hiiiiieeeer: ', [b_pi_1, b_pi_2, b_pi_3])
-                print(T_in)
-                print(T_out)
+                R_vec[np.shape(E1_mat)[0]+mycounter] = b_pi_3
    
         E_mat = np.concatenate((E1_mat, E2_mat), axis=0)
         E_mat = sp.sparse.csc_matrix(E_mat)

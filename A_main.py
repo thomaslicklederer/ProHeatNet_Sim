@@ -58,14 +58,13 @@ mysolutions = hy_model.save_solution()
 ############################################################################
 
 ############################ thermal model #################################
-try:
-    th_model = tm.th_prob(mysetup, mygraph, mysolutions)
-    th_model.problem_formulation()
-    th_model.solve()
-    th_model.do_some_calculations()
-    mysolutions = th_model.save_solution()
-except:
-    pass
+
+th_model = tm.th_prob(mysetup, mygraph, mysolutions)
+th_model.problem_formulation()
+th_model.solve()
+th_model.do_some_calculations()
+mysolutions = th_model.save_solution()
+
 
 ############################################################################
 
