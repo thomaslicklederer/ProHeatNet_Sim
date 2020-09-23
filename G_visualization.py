@@ -534,14 +534,6 @@ def visualize_th_solution(setup, graph, solutions, th_problem, withsymbols = Fal
                     T_prim_in_str = r'$T_{prim,in} = %5.1f ^\circ C$' % (T_soldict[Edges_Temps_dict[PSM]['T_in_HTNW']]-273.15)
                     T_prim_out_str = r'$T_{prim,out} = %5.1f ^\circ C$' % (T_soldict[Edges_Temps_dict[PSM]['T_out_HTNW']]-273.15)
                     
-                    print(dotm_sec_str)
-                    print(T_sec_in_str)
-                    print(T_sec_out_str)
-                    print(Q_sec_str)
-                    print(dotm_prim_str)
-                    print(T_prim_in_str)
-                    print(T_prim_out_str)
-                    
                     
                     if mu_dict[PSM]==1:
                         imagebox_pump = OffsetImage(img_pump, zoom=0.19)

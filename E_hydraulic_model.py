@@ -1,3 +1,12 @@
+import numpy as np
+import gurobipy as gp
+from gurobipy import GRB
+import numpy as np
+import itertools
+import networkx as nx
+import scipy as sp
+
+
 class hy_prob:
     '''code by M.Sc. Thomas Licklederer, Technical University of Munich, MSE, all 
     rights reserved
@@ -11,7 +20,6 @@ class hy_prob:
         self.solution_dict = solution_dict
         
     def problem_formulation(self):
-        import numpy as np
         
         self.preparation()
         
@@ -22,10 +30,7 @@ class hy_prob:
             self.problem_group.append(self.single_prob(cntr))
             
     def solve_group(self):
-        import gurobipy as gp
-        from gurobipy import GRB
-        import numpy as np
-        
+       
         solutions={}
         fails = 0
         objVal_vec = []
@@ -34,9 +39,7 @@ class hy_prob:
         iterations_vec = []
         
         for cntr in range(np.shape(self.sigma_mat)[1]):
-            print("##############################")
-            gp.Env(empty=True).setParam('OutputFlag', 0)
-            gp.Env(empty=True).start()
+            
             m = self.problem_group[cntr]
             
             m.optimize()
@@ -57,10 +60,9 @@ class hy_prob:
                 solutions[case]["objVal"]=-9999
                 for var in m.getVars():
                     solutions[case][var.VarName]=-9999
-            print("##############################")
+            
         
         # find best solution
-        print(objVal_vec)
         bestobj = min(objVal_vec)
         
         bestcase = cases_vec[objVal_vec.index(bestobj)]
@@ -94,10 +96,7 @@ class hy_prob:
             
             self.solution_dict['dotV'][edge]=dotV
             self.solution_dict['Deltap'][edge]=Deltap
-            
-        from pprint import pprint
-    
-        pprint(self.solution_dict)
+
         
         return self.solution_dict
 
@@ -111,11 +110,11 @@ class hy_prob:
         
         
     def single_prob(self,cntr):
-        import gurobipy as gp
-        from gurobipy import GRB
+
         
         # create a new gurobi model
         gum = gp.Model("hydraulic_model")
+        gum.params.LogToConsole = 0
         
         # create variables
         # dotV
@@ -174,11 +173,11 @@ class hy_prob:
         # Adjust parameters
         gum.params.NonConvex = 2
         
+        
         return gum
        
     def create_param_vecs(self):
-        import itertools
-        import numpy as np
+
         
         # pi_P
         self.pi_vec = [self.setup.scenario[P]['pi'] for P in self.setup.PSM]
@@ -246,7 +245,7 @@ class hy_prob:
     def calc_matrices(self):
         '''Calculate matrices for hydraulic problem formulation.'''
         
-        import networkx as nx
+       
         
         # incidence_matrix
         B_mat = nx.linalg.graphmatrix.incidence_matrix(self.graph.G, nodelist=self.setup.v_vec,
@@ -260,8 +259,7 @@ class hy_prob:
         
         
     def cycle_basis_mat(self):
-        import networkx as nx
-        import scipy as sp
+ 
         
         # cycle basis matrix
         loops = nx.cycle_basis(self.graph.G_prim,root=None)

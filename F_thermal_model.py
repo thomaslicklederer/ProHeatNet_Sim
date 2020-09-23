@@ -3,6 +3,7 @@ import scipy as sp
 from pprint import pprint
 import gurobipy as gp
 from gurobipy import GRB
+import networkx as nx
 
 class th_prob:
     '''code by M.Sc. Thomas Licklederer, Technical University of Munich, MSE, all 
@@ -22,6 +23,7 @@ class th_prob:
         
         # create a new gurobi model
         self.gumo = gp.Model("thermal_model")
+        self.gumo.params.LogToConsole = 0
         
         # create variables
         T = self.gumo.addMVar(shape= len(self.general_stuff['T_vec']), obj=1, vtype=GRB.CONTINUOUS,
@@ -139,15 +141,12 @@ class th_prob:
         self.S_T_in_mat, self.T_sec_in_vec = self.set_PSM_inlet_temps()
         
         self.dotV_vec = self.set_PSM_flows()
-    
-        pprint(self.general_stuff)
         
     def general_stuff(self):
         
         self.general_stuff = {}
         dotV_dict = self.solution_dict['dotV']
         
-        import networkx as nx
         
         # incidence_matrix
         B_mat = nx.linalg.graphmatrix.incidence_matrix(self.graph.G, nodelist=self.setup.v_vec,
@@ -339,13 +338,12 @@ class th_prob:
             temp=list(np.argwhere(M_mat_sign_tilde[row]==-1))
             temp = [int(i) for i in temp]
             relev_Ts.append(temp)
-        print('relev Ts',relev_Ts)
+
         L_mat = []
         myctr = 0
         for i in range(len(relev_Ts)):
             node_Ts = relev_Ts[i]
             for j in range(1, len(node_Ts)):
-                print(myctr)
                 L_mat.append(list(np.zeros(M_mat_sign_tilde.shape[1])))
                 L_mat[myctr][node_Ts[0]]=-1
                 L_mat[myctr][node_Ts[j]]=1

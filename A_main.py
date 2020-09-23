@@ -9,7 +9,7 @@ import os
 import sympy as sym
 import gurobipy as gp
 from gurobipy import GRB
-from pprint import pprint
+import pprint
 
 import B_setup as su
 import C_network as net
@@ -70,29 +70,19 @@ mysolutions = th_model.save_solution()
 
 ############################ print solution in console #####################
 
-pprint(vars(mysetup))
-pprint(mysolutions)
+pprint.pprint(vars(mysetup))
+pprint.pprint(mysolutions)
 
+############################################################################
 
-try:
-    sum = 0
-    sum2 = 0
-    sum3 = 0
+############################ export results to logfile #####################
 
-    for key in mysolutions['Q_trnsf'].keys():
-        sum += mysolutions['Q_trnsf'][key]
-        
-    for key in mysolutions['Q_trnsf2'].keys():
-        sum2 += mysolutions['Q_trnsf2'][key]
+with open("results.txt", "w") as fout:
 
-    for key in mysolutions['Q_loss'].keys():
-        sum3 += abs(mysolutions['Q_loss'][key])
-        
-    print('sum_trnsf1: ', sum)
-    print('sum_trnsf2: ', sum2)
-    print('sum_loss: ', sum3)
-except:
-    pass
+    fout.write(pprint.pformat(vars(mysetup)))
+
+    fout.write(pprint.pformat(mysolutions))
+    
 
 ############################################################################
 
@@ -109,6 +99,25 @@ vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, wi
 
 # thermal solution
 vis.visualize_th_solution(mysetup, mygraph, mysolutions, th_model, withsymbols = False, withnumbers = True)
+
+############################################################################
+
+############################ plausability check ############################
+
+sum_Q_trnsf = 0
+sum_Q_trnsf2 = 0
+sum_Q_loss = 0
+
+for key in mysolutions['Q_trnsf'].keys():
+    sum_Q_trnsf += mysolutions['Q_trnsf'][key]
+for key in mysolutions['Q_trnsf2'].keys():
+    sum_Q_trnsf2 += mysolutions['Q_trnsf2'][key]
+for key in mysolutions['Q_loss'].keys():
+    sum_Q_loss += mysolutions['Q_loss'][key]
+    
+print('sum_Q_trnsf:\t', float(sum_Q_trnsf))
+print('sum_Q_trnsf2:\t', float(sum_Q_trnsf2))
+print('sum_Q_loss:\t', float(sum_Q_loss))
 
 ############################################################################
 

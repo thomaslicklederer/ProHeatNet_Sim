@@ -1,3 +1,9 @@
+import D_component_models as cm
+import math
+import random
+import numpy as np
+from pprint import pprint
+
 class setup:
     """Code by M.Sc. Thomas Licklederer, Technical University of Munich, MSE, 2020,
     all rights reserved
@@ -5,10 +11,9 @@ class setup:
     
     def __init__(self, path_config, path_param, path_scenario, dicenbr):
         import D_component_models as cm
-        import math
         import random
+        import math
         import numpy as np
-        from pprint import pprint
             
         exec(open(path_config).read(), locals())
         
@@ -74,9 +79,6 @@ class setup:
         exec(open(path_param).read(), locals())
         exec(open(path_scenario).read(), locals())
                
-        print('\n%%%%%%%%%%%%%%%%% SETUP-BEGIN %%%%%%%%%%%%%%%%%')
-        pprint(vars(self))
-        print('%%%%%%%%%%%%%%%%% SETUP-END %%%%%%%%%%%%%%%%%\n')
         
     def setup_solutions(self):
         
