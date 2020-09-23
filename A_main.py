@@ -95,7 +95,7 @@ vis.visualize_graph(mysetup, mygraph, mysolutions)
 vis.visualize_scenario(mysetup, mygraph, mysolutions)
 
 # hydraulic solution
-vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, withnumbers = True)
+vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, withnumbers = True, data = 'flow')
 
 # thermal solution
 vis.visualize_th_solution(mysetup, mygraph, mysolutions, th_model, withsymbols = False, withnumbers = True)

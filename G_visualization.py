@@ -225,7 +225,7 @@ def visualize_scenario(setup, graph, solutions):
         
         plt.savefig(''.join((savepath, 'vis_scenario.', saveformat)), format = saveformat)
     
-def visualize_hy_solution(setup, graph, solutions, withsymbols=False, withnumbers = True):
+def visualize_hy_solution(setup, graph, solutions, withsymbols=False, withnumbers = True, data = 'flow'):
     savepath = './figs/'
     saveformat = 'png' # jpg, png, eps, svgd
     
@@ -255,22 +255,38 @@ def visualize_hy_solution(setup, graph, solutions, withsymbols=False, withnumber
             graph.Gsol_hy.edges[(edge[1],edge[0])]['dotV']=-dotV_soldict[(edge[0],edge[1])]
             graph.Gsol_hy.edges[(edge[1],edge[0])]['Deltap']=-Deltap_soldict[(edge[0],edge[1])]
             myedgelabels[(edge[1],edge[0])]=[]
-            myedgelabels[(edge[1],edge[0])].append('{0:6.2f} l/min'.format(-dotV_soldict[(edge[0],edge[1])]))
-            myedgelabels[(edge[1],edge[0])].append('{0:6.1f} hPa'.format(-Deltap_soldict[(edge[0],edge[1])]))
+            if data == 'flow':
+                myedgelabels[(edge[1],edge[0])].append('{0:6.2f} l/min'.format(-dotV_soldict[(edge[0],edge[1])]))
+            elif data == 'pressure':
+                myedgelabels[(edge[1],edge[0])].append('{0:6.1f} hPa'.format(-Deltap_soldict[(edge[0],edge[1])]))
+            elif data == 'both':
+                myedgelabels[(edge[1],edge[0])].append('{0:6.2f} l/min'.format(-dotV_soldict[(edge[0],edge[1])]))
+                myedgelabels[(edge[1],edge[0])].append('{0:6.1f} hPa'.format(-Deltap_soldict[(edge[0],edge[1])]))
+            
         elif np.sign(dotV_soldict[edge])==1:
             graph.Gsol_hy.add_edge(edge[0],edge[1])
             graph.Gsol_hy.edges[(edge[0],edge[1])]['dotV']=dotV_soldict[(edge[0],edge[1])]
             graph.Gsol_hy.edges[(edge[0],edge[1])]['Deltap']=Deltap_soldict[(edge[0],edge[1])]
             myedgelabels[(edge[0],edge[1])]=[]
-            myedgelabels[(edge[0],edge[1])].append('{0:6.2f} l/min'.format(dotV_soldict[(edge[0],edge[1])]))
-            myedgelabels[(edge[0],edge[1])].append('{0:6.1f} hPa'.format(Deltap_soldict[(edge[0],edge[1])]))
+            if data == 'flow':
+                myedgelabels[(edge[0],edge[1])].append('{0:6.2f} l/min'.format(dotV_soldict[(edge[0],edge[1])]))
+            elif data == 'pressure':
+                myedgelabels[(edge[0],edge[1])].append('{0:6.1f} hPa'.format(Deltap_soldict[(edge[0],edge[1])]))
+            elif data == 'both':
+                myedgelabels[(edge[0],edge[1])].append('{0:6.2f} l/min'.format(dotV_soldict[(edge[0],edge[1])]))
+                myedgelabels[(edge[0],edge[1])].append('{0:6.1f} hPa'.format(Deltap_soldict[(edge[0],edge[1])]))
         elif np.sign(dotV_soldict[edge])==0:
             graph.Gsol_hy.add_edge(edge[0],edge[1])
             graph.Gsol_hy.edges[(edge[0],edge[1])]['dotV']=dotV_soldict[(edge[0],edge[1])]
             graph.Gsol_hy.edges[(edge[0],edge[1])]['Deltap']=Deltap_soldict[(edge[0],edge[1])]
             myedgelabels[(edge[0],edge[1])]=[]
-            myedgelabels[(edge[0],edge[1])].append('{0:6.2f} l/min'.format(dotV_soldict[(edge[0],edge[1])]))
-            myedgelabels[(edge[0],edge[1])].append('{0:6.1f} hPa'.format(Deltap_soldict[(edge[0],edge[1])]))
+            if data == 'flow':
+                myedgelabels[(edge[0],edge[1])].append('{0:6.2f} l/min'.format(dotV_soldict[(edge[0],edge[1])]))
+            elif data == 'pressure':
+                myedgelabels[(edge[0],edge[1])].append('{0:6.1f} hPa'.format(Deltap_soldict[(edge[0],edge[1])]))
+            elif data == 'both':
+                myedgelabels[(edge[0],edge[1])].append('{0:6.2f} l/min'.format(dotV_soldict[(edge[0],edge[1])]))
+                myedgelabels[(edge[0],edge[1])].append('{0:6.1f} hPa'.format(Deltap_soldict[(edge[0],edge[1])]))
         else:
             raise ValueError('')
     
@@ -392,7 +408,7 @@ def visualize_hy_solution(setup, graph, solutions, withsymbols=False, withnumber
     if withnumbers == True:
         nx.drawing.nx_pylab.draw_networkx_edge_labels(graph.Gsol_hy, 
                              pos=setup.coordinates,
-                             fontsize = 20,
+                             font_size = 14,
                              edge_labels = myedgelabels, node_color = colorslist,
                              arrowsize=15, arrowstyle=myarrowstyle,
                              node_size=700, width=3,
@@ -526,11 +542,11 @@ def visualize_th_solution(setup, graph, solutions, th_problem, withsymbols = Fal
                     inv1=plt.gca().transData.inverted()
                     inv2=plt.gca().transAxes.inverted()
                                                                             
-                    dotm_sec_str = r'$\dot{m}_{sec} = %4.2f \frac{kg}{min}$' % (dotV_sec_dict[PSM])
+                    dotm_sec_str = r'$\dot{V}_{sec} = %4.2f \frac{kg}{min}$' % (dotV_sec_dict[PSM])
                     T_sec_in_str = r'$T_{sec,in} = %5.1f ^\circ C$' % (T_sec_dict[PSM]-273.15)
                     T_sec_out_str = r'$T_{sec,out} = %5.1f ^\circ C$' % (T_soldict[Edges_Temps_dict[PSM]['T_out_PSM']]-273.15)
                     Q_sec_str = r'$\dot{Q}_{sec} = %4.2f kW $' % (Q_soldict[PSM])
-                    dotm_prim_str = r'$\dot{m}_{prim} = %4.2f \frac{kg}{min}$' % (Edges_Temps_dict[PSM]['dotV_HTNW'])
+                    dotm_prim_str = r'$\dot{V}_{prim} = %4.2f \frac{kg}{min}$' % (Edges_Temps_dict[PSM]['dotV_HTNW'])
                     T_prim_in_str = r'$T_{prim,in} = %5.1f ^\circ C$' % (T_soldict[Edges_Temps_dict[PSM]['T_in_HTNW']]-273.15)
                     T_prim_out_str = r'$T_{prim,out} = %5.1f ^\circ C$' % (T_soldict[Edges_Temps_dict[PSM]['T_out_HTNW']]-273.15)
                     
@@ -577,7 +593,7 @@ def visualize_th_solution(setup, graph, solutions, th_problem, withsymbols = Fal
     if withnumbers == True:
         nx.drawing.nx_pylab.draw_networkx_edge_labels(graph.Gsol_th, 
                             pos=setup.coordinates,
-                            fontsize = 20,
+                            font_size = 15,
                             edge_labels = myedgelabels, node_color = colorslist,
                             arrowsize=15, arrowstyle=myarrowstyle,
                             node_size=700, width=3,
