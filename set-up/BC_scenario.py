@@ -26,9 +26,9 @@ T_max_c = 50+273.15
 T_sec_in_vec = list(np.zeros(np.shape(mu_vec)))
 for entry in range(len(T_sec_in_vec)):
     if mu_vec[entry] == -1:
-        T_sec_in_vec[entry]=40+273.15 # ((T_max_c-T_min_c)*random.random()+T_min_c)
+        T_sec_in_vec[entry]=45+273.15 # ((T_max_c-T_min_c)*random.random()+T_min_c)
     elif mu_vec[entry] == +1:
-        T_sec_in_vec[entry]=70+273.15 # ((T_max_w-T_min_w)*random.random()+T_min_w)
+        T_sec_in_vec[entry]=65+273.15 # ((T_max_w-T_min_w)*random.random()+T_min_w)
 T_sec_in_degree_vec = list(np.array(T_sec_in_vec) - 273.15)
  
 #dotV_sec_in
@@ -36,9 +36,9 @@ dotV_sec_in_vec = list(np.zeros(np.shape(mu_vec)))
 dotV_norm   =   math.pi*((0.022)**2)*(1/4)*1*60*1000 # liters per minute
 for entry in range(len(dotV_sec_in_vec)):
     if mu_vec[entry] == -1:
-        dotV_sec_in_vec[entry]=+23 # +(0.8+0.25*random.uniform(-1.0, 1.0))*dotV_norm
+        dotV_sec_in_vec[entry]=+14 # +(0.8+0.25*random.uniform(-1.0, 1.0))*dotV_norm
     elif mu_vec[entry] == +1:
-        dotV_sec_in_vec[entry]=-23 #-(0.8+0.25*random.uniform(-1.0, 1.0))*dotV_norm
+        dotV_sec_in_vec[entry]=-14 #-(0.8+0.25*random.uniform(-1.0, 1.0))*dotV_norm
  
 #kappa
 kappa_vec = list(np.zeros(np.shape(mu_vec)))
@@ -71,6 +71,7 @@ for prosumer in range(self.M):
     self.scenario[prosumer+1]['u']   =   u_vec[prosumer]
 self.scenario['T_soil'] = T_soil
 
-# self.scenario[4]['u'] = 1
+
+
 
         
