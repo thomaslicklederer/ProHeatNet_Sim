@@ -19,7 +19,7 @@ def visualize_graph(setup, graph, solutions):
         # parameters
         myfontsize = 20
         myfigsize=[2*21.0/2.54, 2*12.98/2.54]
-        myarrowstyle = mpltlib.patches.ArrowStyle.CurveFilledAB(head_length=0.6, head_width=0.4) #CurveB, CurveFilledB
+        myarrowstyle = mpltlib.patches.ArrowStyle.CurveB(head_length=0.6, head_width=0.4) #CurveB, CurveFilledAB
         savepath = './figs/'
         saveformat = 'png' # jpg, png, eps, svgd
         
@@ -46,7 +46,7 @@ def visualize_graph(setup, graph, solutions):
                                  pos=setup.coordinates,
                                  fontsize = 20,
                                  with_labels=True, node_color = colorslist,
-                                 arrowsize=15, arrowstyle=myarrowstyle,
+                                 arrowsize=25, arrowstyle=myarrowstyle,
                                  node_size=700, width=3,
                                  font_weight = 'bold', alpha=1)
         

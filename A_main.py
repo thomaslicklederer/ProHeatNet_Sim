@@ -29,7 +29,7 @@ plt.close(fig='all')
 ############################ set-up ########################################
 path_config     =   "set-up/BA_configuration.py"
 path_param      =   "set-up/BB_parametrization.py" 
-path_scenario   =   "set-up/BC_scenario.py"
+path_scenario   =   "set-up/interesting_scenario1.py"
 dicenbr         =   7
 
 mysetup = su.setup(path_config, path_param, path_scenario, dicenbr)

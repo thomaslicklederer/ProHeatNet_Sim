@@ -268,6 +268,17 @@ class pipe:
             raise ValueError('Length of lambda_layers must be equal to N_layers!')
         else:
             pass
+            
+        h_layers_rev = 0
+        for i in range(self.N_layers):
+                h_layers_rev += ((math.log((self.d_layers[i+1])/(self.d_layers[i])))/
+                (self.lambda_layers[i]))
+        self.h_layers_rev = h_layers_rev
+        
+        k_th_ir = (1/self.h_ir +
+                   self.d_hy * h_layers_rev + 
+                   (self.d_hy/self.d_layers[-1])*(1/self.h_or))**(-1)
+        self.k_th_ir =k_th_ir   #[W/((m**2)*K)]
     
     def hy_params(self, fluid):
         '''fluid                   defined fluid'''
@@ -294,21 +305,10 @@ class pipe:
         
         dotV2 = abs(dotV)*(1/60000)
         
-        h_layers_rev = 0
-        for i in range(self.N_layers):
-                h_layers_rev += ((math.log((self.d_layers[i+1])/(self.d_layers[i])))/
-                (self.lambda_layers[i]))
-        self.h_layers_rev = h_layers_rev
-        
-        k_th_ir = (1/self.h_ir +
-                   self.d_hy * h_layers_rev + 
-                   (self.d_hy/self.d_layers[-1])*(1/self.h_or))**(-1)
-        self.k_th_ir =k_th_ir   #[W/((m**2)*K)]
-        
         A_circ = math.pi * self.d_hy * self.L
         
         try:
-            s_pi = (k_th_ir * math.pi * self.d_hy)/(dotV2*fluid.rho_SI * fluid.cp)
+            s_pi = (self.k_th_ir * math.pi * self.d_hy)/(dotV2*fluid.rho_SI * fluid.cp)
             b_pi_1 = -(1/math.cosh(s_pi*self.L))
             b_pi_3 = T_soil*(1-(1/math.cosh(s_pi*self.L)))
             b_pi_2 = 1
