@@ -292,7 +292,7 @@ class pipe:
         Re_nom))**(1.0/3.0))     # [-]
         
         # hydralic resistance of pipe
-        a_pi_1    =   -(8/math.pi)*fluid.rho_SI*(1/(self.d_hy**4))*\
+        a_pi_1    =   -(8/(math.pi**2))*fluid.rho_SI*(1/(self.d_hy**4))*\
             ((self.L/self.d_hy)*f_D+self.zeta_instal)# [Pa*(s**2)/(m**3**2)]
         a_pi_1    =   a_pi_1 * 1/(100*(60*1000)**2) #[Pa*(min**2)/(l**2)]
         
