@@ -27,12 +27,11 @@ plt.close(fig='all')
 ##########################################################
 
 ############################ set-up ########################################
-path_config     =   "set-up/BA_configuration.py"
-path_param      =   "set-up/BB_parametrization.py" 
-path_scenario   =   "set-up/interesting_scenario1.py"
-dicenbr         =   7
+path_config     =   "set-up/my_set-up/configuration.py"
+path_param      =   "set-up/my_set-up/parametrization.py" 
+path_scenario   =   "set-up/my_set-up/scenario.py"
 
-mysetup = su.setup(path_config, path_param, path_scenario, dicenbr)
+mysetup = su.setup(path_config, path_param, path_scenario)
 
 ############################################################################
 
@@ -78,10 +77,15 @@ pprint.pprint(mysolutions)
 ############################ export results to logfile #####################
 
 with open("results.txt", "w") as fout:
-
+    fout.write("########## set-up ##########\n\n")
+    
     fout.write(pprint.pformat(vars(mysetup)))
+    
+    fout.write("\n\n########## solutions ##########\n\n")
 
     fout.write(pprint.pformat(mysolutions))
+    
+    fout.write("\n\n##############################")
     
 
 ############################################################################

@@ -9,7 +9,7 @@ class setup:
     all rights reserved
     DESCRIPTION TO BE ADDED"""
     
-    def __init__(self, path_config, path_param, path_scenario, dicenbr):
+    def __init__(self, path_config, path_param, path_scenario):
         import D_component_models as cm
         import random
         import math

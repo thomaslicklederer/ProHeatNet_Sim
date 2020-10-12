@@ -2,6 +2,9 @@
 ## inputs per edge:        V_min, V_max
 ## general inputs: T_soil
 
+# for random generator
+dicenbr = 7
+
 # T_soil
 T_soil = 12+273.15
 

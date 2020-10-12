@@ -66,9 +66,9 @@ def visualize_graph(setup, graph, solutions):
 def visualize_scenario(setup, graph, solutions, withnumbers=True):
         # initializations
         G = graph.G
-        img_valve = mpimg.imread('figs/valve_img.png')
-        img_hx = mpimg.imread('figs/hx_img.png')
-        img_pump = mpimg.imread('figs/pump_img.png')
+        img_valve = mpimg.imread('aux_files/valve_img.png')
+        img_hx = mpimg.imread('aux_files/hx_img.png')
+        img_pump = mpimg.imread('aux_files/pump_img.png')
         
         mu_dict = {P: setup.scenario[P]['mu'] for P in setup.PSM}
         u_dict = {P: setup.scenario[P]['u'] for P in setup.PSM}
@@ -331,9 +331,9 @@ def visualize_hy_solution(setup, graph, solutions, withsymbols=False, withnumber
     plt.gca().set_xlim(min(xcoords)-30, max(xcoords)+30)
     plt.gca().set_ylim(min(ycoords)-30, max(ycoords)+30)
             
-    img_valve = mpimg.imread('figs/valve_img.png')
-    img_hx = mpimg.imread('figs/hx_img.png')
-    img_pump = mpimg.imread('figs/pump_img.png')
+    img_valve = mpimg.imread('aux_files/valve_img.png')
+    img_hx = mpimg.imread('aux_files/hx_img.png')
+    img_pump = mpimg.imread('aux_files/pump_img.png')
     
     if withsymbols == True:
         for PSM in mu_dict:
@@ -514,9 +514,9 @@ def visualize_th_solution(setup, graph, solutions, th_problem, withsymbols = Fal
     plt.gca().set_xlim(min(xcoords)-30, max(xcoords)+30)
     plt.gca().set_ylim(min(ycoords)-30, max(ycoords)+30)
             
-    img_valve = mpimg.imread('figs/valve_img.png')
-    img_hx = mpimg.imread('figs/hx_img.png')
-    img_pump = mpimg.imread('figs/pump_img.png')
+    img_valve = mpimg.imread('aux_files/valve_img.png')
+    img_hx = mpimg.imread('aux_files/hx_img.png')
+    img_pump = mpimg.imread('aux_files/pump_img.png')
     
     if withsymbols == True:
         for PSM in mu_dict:

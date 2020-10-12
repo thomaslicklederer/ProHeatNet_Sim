@@ -1,21 +1,23 @@
+########## set-up ##########
+
 {'M': 3,
  'PSM': [1, 2, 3],
- 'components': {('1c', '2c'): {'pipe': <D_component_models.pipe object at 0x7f5039bf0390>},
-                ('1h', '1c'): {'controlvalve': <D_component_models.controlvalve object at 0x7f5039bf0290>,
-                               'heatexchanger': <D_component_models.heatexchanger object at 0x7f5039bf0310>,
-                               'pipe': <D_component_models.pipe object at 0x7f5039bf0390>,
-                               'pump': <D_component_models.pump object at 0x7f5039bf02d0>},
-                ('1h', '2h'): {'pipe': <D_component_models.pipe object at 0x7f5039bf0390>},
-                ('2c', '3c'): {'pipe': <D_component_models.pipe object at 0x7f5039bf0390>},
-                ('2h', '2c'): {'controlvalve': <D_component_models.controlvalve object at 0x7f5039bf0290>,
-                               'heatexchanger': <D_component_models.heatexchanger object at 0x7f5039bf0310>,
-                               'pipe': <D_component_models.pipe object at 0x7f5039bf0390>,
-                               'pump': <D_component_models.pump object at 0x7f5039bf02d0>},
-                ('2h', '3h'): {'pipe': <D_component_models.pipe object at 0x7f5039bf0390>},
-                ('3h', '3c'): {'controlvalve': <D_component_models.controlvalve object at 0x7f5039bf0290>,
-                               'heatexchanger': <D_component_models.heatexchanger object at 0x7f5039bf0310>,
-                               'pipe': <D_component_models.pipe object at 0x7f5039bf0390>,
-                               'pump': <D_component_models.pump object at 0x7f5039bf02d0>}},
+ 'components': {('1c', '2c'): {'pipe': <D_component_models.pipe object at 0x7fba900c1fd0>},
+                ('1h', '1c'): {'controlvalve': <D_component_models.controlvalve object at 0x7fba900c1450>,
+                               'heatexchanger': <D_component_models.heatexchanger object at 0x7fba900c1110>,
+                               'pipe': <D_component_models.pipe object at 0x7fba900c1fd0>,
+                               'pump': <D_component_models.pump object at 0x7fba900c17d0>},
+                ('1h', '2h'): {'pipe': <D_component_models.pipe object at 0x7fba900c1fd0>},
+                ('2c', '3c'): {'pipe': <D_component_models.pipe object at 0x7fba900c1fd0>},
+                ('2h', '2c'): {'controlvalve': <D_component_models.controlvalve object at 0x7fba900c1450>,
+                               'heatexchanger': <D_component_models.heatexchanger object at 0x7fba900c1110>,
+                               'pipe': <D_component_models.pipe object at 0x7fba900c1fd0>,
+                               'pump': <D_component_models.pump object at 0x7fba900c17d0>},
+                ('2h', '3h'): {'pipe': <D_component_models.pipe object at 0x7fba900c1fd0>},
+                ('3h', '3c'): {'controlvalve': <D_component_models.controlvalve object at 0x7fba900c1450>,
+                               'heatexchanger': <D_component_models.heatexchanger object at 0x7fba900c1110>,
+                               'pipe': <D_component_models.pipe object at 0x7fba900c1fd0>,
+                               'pump': <D_component_models.pump object at 0x7fba900c17d0>}},
  'coordinates': {'1c': [10, 10],
                  '1h': [10, 60],
                  '2c': [60, 10],
@@ -33,7 +35,7 @@
            ('3h', '3c'),
            ('1c', '2c'),
            ('2c', '3c')],
- 'myfluid': <D_component_models.fluid object at 0x7f5039bf0490>,
+ 'myfluid': <D_component_models.fluid object at 0x7fba900c18d0>,
  'scenario': {1: {'T_sec_in': 338.15,
                   'T_sec_in_degree': 65,
                   'dotV_sec_in': -10,
@@ -57,7 +59,11 @@
                   'u': 0},
               'T_soil': 285.15},
  'topology': [(1, 2), (2, 3)],
- 'v_vec': ['1h', '2h', '3h', '1c', '2c', '3c']}{'DeltaT': {1: 18.82586967501726,
+ 'v_vec': ['1h', '2h', '3h', '1c', '2c', '3c']}
+
+########## solutions ##########
+
+{'DeltaT': {1: 18.82586967501726,
             2: 10.926827008175053,
             3: 7.8981435700048905,
             ('1c', '2c'): 9.111577122666858e-05,
@@ -114,3 +120,5 @@
           ('2h', '2c'): 6.811771150576993,
           ('2h', '3h'): 4.8946221403747,
           ('3h', '3c'): 4.8946221403747}}
+
+##############################

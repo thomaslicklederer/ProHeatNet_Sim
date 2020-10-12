@@ -9,7 +9,9 @@ import pdb
 class fluid:
     '''code by M.Sc. Thomas Licklederer, Technical University of Munich, MSE, all 
     rights reserved
-    DESCRIPTION TO BE ADDED'''
+    rho             [kg/(m**3)]     density of fluid
+    cp              [J/(kg*K)]      specific isobaric heat capacity
+    mu              [Pa*s]          dynamic viscosity'''
     
     # Initializer / Instance Attributes
     def __init__(self, rho=1000, cp=4200, mu=(1.0016*(10**(-3)))):
@@ -27,14 +29,13 @@ class fluid:
 class heatexchanger:
     '''code by M.Sc. Thomas Licklederer, Technical University of Munich, MSE, all 
     rights reserved
-    DESCRIPTION TO BE ADDED'''
+    dotV_nom        [l/min]         nominal volume flow rate
+    Deltap_nom      [hPa]           head loss at nominal mass flow rate
+    k_nom           [W/((m*2)*K)]   nominal heat transfer coefficient
+    A               [m**2]          heat transfer surface'''
     
     # Initializer / Instance Attributes
     def __init__(self, dotV_nom=21.504, Deltap_nom=155, k_nom = 5270, A = 1.13):
-        ''' dotV_nom    [l/min]
-            Deltap_nom  [hPa]    
-            k_nom       [W/((m*2)*K)]
-            A           [m**2]  '''
         
         # set properties
         self.dotV_nom   =   dotV_nom    # nominal volume flow rate    [l/min]
@@ -228,24 +229,23 @@ class heatexchanger:
 class pipe:
     '''code by M.Sc. Thomas Licklederer, Technical University of Munich, MSE, all
     rights reserved
-    DESCRIPTION TO BE ADDED'''
+    L               [m]             pipe length
+    d_hy            [m]             (hydraulic) inner pipe diameter
+    epsilon         [mm]            roughness of inner pipe surface
+    u_nom           [m/s]           nominal flow velocity
+    zeta_instal     [-]             pressure loss coefficient (Druckverlustbeiwert)
+                                    for installations in pipe (such as bends, junctions etc.) 
+    N_layers        [-]             number of layers around pipe (for thermal losses),
+                                    e.g. pipe wall (1), insulation (2), soil environment (3)
+    d_layers        [m]             diameters [m] at the borders of the layers
+    lambda_layers   [W/(m*K)]       thermal conductivity of layers
+    h_ir            [W/((m**2)*K)]  heat transfer coefficient at inside of pipe
+    h_or            [W/((m**2)*K)]  heat transfer coefficient at outside of outest pipe layer'''
     
     # Initializer / Instance Attributes
     def __init__(self, L=15,d_hy=0.022,epsilon=0.011,u_nom=1,zeta_instal=10,
                  N_layers = 3, d_layers = [0.022, 0.024, 0.062, 0.262],
                  lambda_layers = [395, 0.04, 2], h_ir=6700, h_or=100):
-        ''' fluid   
-            L       [m]
-            d_hy    [m]
-            epsilon [mm]
-            u_nom   [m/s]
-            zeta_instal [-]
-            N_layers [-]
-            d_layers [m]
-            lambda_layers [W/(m*K)]
-            h_ir      ... heat transfer coefficient at inside of pipe [W/((m**2)*K)]
-            h_or      ... heat transfer coefficient at outside of outest pipe layer
-            '''
     
         # set properties
         self.L          =   L               # pipe length   [m]
@@ -351,18 +351,17 @@ class pump:
     '''code by M.Sc. Thomas Licklederer, Technical University of Munich, MSE, all
     rights
     reserved
-    DESCRIPTION TO BE ADDED'''
+    n_nom           [RPM = 1/min]   nominal pump speed
+    u_ref_1         [-]             controll variable ref. oper. state 1
+    dotV_ref_1      [l/min]         volume flow ref. oper. state 1
+    Deltap_ref_1    [hPa]           pressure difference ref. oper. state 1
+    u_ref_2         [-]             controll variable ref. oper. state 2
+    dotV_ref_2      [l/min]         volume flow ref. oper. state 2
+    Deltap_ref_2    [hPa]           pressure difference ref. oper. state 2'''
     
     # Initializer / Instance Attributes
     def __init__(self, n_nom=4100, u_ref_1=1, dotV_ref_1=0, Deltap_ref_1=402.21, 
                     u_ref_2=1, dotV_ref_2=55.33, Deltap_ref_2=0 ):
-        ''' n_nom       [RPM = 1/min]   nominal pump speed
-            u_ref_1     [-]             controll variable ref. oper. state 1
-            dotV_ref_1  [l/min]         volume flow ref. oper. state 1
-            Deltap_ref_1 [hPa]          pressure difference ref. oper. state 1
-            u_ref_2     [-]             controll variable ref. oper. state 2
-            dotV_ref_2  [l/min]         volume flow ref. oper. state 2
-            Deltap_ref_2 [hPa]          pressure difference ref. oper. state 2'''
             
         self.n_nom  =   n_nom
         self.u_ref_1    =   u_ref_1
@@ -398,11 +397,10 @@ class pump:
         
 class controlvalve:
     '''code by M.Sc. Thomas Licklederer, Technical University of Munich, MSE, all
-    rights reserved DESCRIPTION TO BE ADDED'''
+    rights reserved
+    K_vs            [(m**3)/h]      Flow coefficient at full opening'''
     
     def __init__(self, K_vs=2.5):
-        ''' K_vs [(m**3)/h]'''
-        
         # set properties 
         self.K_vs   =   K_vs*(1000/60)
         
