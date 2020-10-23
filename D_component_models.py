@@ -244,8 +244,8 @@ class pipe:
     
     # Initializer / Instance Attributes
     def __init__(self, L=15,d_hy=0.022,epsilon=0.011,u_nom=1,zeta_instal=10,
-                 N_layers = 3, d_layers = [0.022, 0.024, 0.062, 0.262],
-                 lambda_layers = [395, 0.04, 2], h_ir=6700, h_or=100):
+                 N_layers = 2, d_layers = [0.022, 0.024, 0.062],
+                 lambda_layers = [395, 0.04], h_ir=6700, h_or=float('inf')):
     
         # set properties
         self.L          =   L               # pipe length   [m]
@@ -269,16 +269,33 @@ class pipe:
         else:
             pass
             
+        if self.d_hy!=self.d_layers[0]:
+            raise ValueError('Hydraulic diameter must be the same as innerst layer thermal diameter!')
+        else:
+            pass
+            
+        # h_layers_old = 0
+        # for i in range(self.N_layers):
+                # h_layers_old += ((math.log((self.d_layers[i+1])/(self.d_layers[i])))/
+                # (2*self.lambda_layers[i]))
+        # self.h_layers_old = h_layers_old
+        
         h_layers_rev = 0
         for i in range(self.N_layers):
                 h_layers_rev += ((math.log((self.d_layers[i+1])/(self.d_layers[i])))/
-                (self.lambda_layers[i]))
+                (2*math.pi*self.lambda_layers[i]))
         self.h_layers_rev = h_layers_rev
         
-        k_th_ir = (1/self.h_ir +
-                   self.d_hy * h_layers_rev + 
-                   (self.d_hy/self.d_layers[-1])*(1/self.h_or))**(-1)
-        self.k_th_ir =k_th_ir   #[W/((m**2)*K)]
+        # k_th_ir_old = (1/self.h_ir +
+                   # self.d_hy * h_layers_old + 
+                   # (self.d_hy/self.d_layers[-1])*(1/self.h_or))**(-1)
+        # self.k_th_ir_old = k_th_ir_old   #[W/((m**2)*K)]
+        
+        self.k_th_ir = (1/(self.h_ir*math.pi*self.d_layers[0])+
+                        h_layers_rev+
+                        +1/(self.h_or*math.pi*self.d_layers[-1]))**(-1) # [W/((m)*K)]
+                        
+        self.R_th_ir = 1/(self.k_th_ir) # [(m*K)/(W)]
     
     def hy_params(self, fluid):
         '''fluid                   defined fluid'''
@@ -299,7 +316,7 @@ class pipe:
         return  a_pi_1
         
     def th_params(self, fluid, dotV, T_soil = 12+273.15):
-        ''' fluid                   defined fluid
+        ''' fluid       defined fluid
             dotV        volume flow [l/min]
             T_soil      constant temperature of surrounding soil [K]'''
         
@@ -308,7 +325,8 @@ class pipe:
         A_circ = math.pi * self.d_hy * self.L
         
         try:
-            s_pi = (self.k_th_ir * math.pi * self.d_hy)/(dotV2*fluid.rho_SI * fluid.cp)
+            #s_pi = (self.k_th_ir * math.pi * self.d_hy)/(dotV2*fluid.rho_SI * fluid.cp)
+            s_pi = math.sqrt((self.k_th_ir)/(dotV2*fluid.rho_SI * fluid.cp))
             b_pi_1 = -(1/math.cosh(s_pi*self.L))
             b_pi_3 = T_soil*(1-(1/math.cosh(s_pi*self.L)))
             b_pi_2 = 1
