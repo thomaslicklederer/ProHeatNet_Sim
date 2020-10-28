@@ -42,9 +42,14 @@ myhx1       =      cm.heatexchanger(dotV_nom=21.504, Deltap_nom=155, k_nom = 527
 ###         lambda_layers   [W/(m*K)]       thermal conductivity of layers
 ###         h_ir            [W/((m**2)*K)]  heat transfer coefficient at inside of pipe
 ###         h_or            [W/((m**2)*K)]  heat transfer coefficient at outside of outest pipe layer
-mypipe1    =      cm.pipe(L=15,d_hy=0.022,epsilon=0.011,u_nom=1,zeta_instal=10,
-                 N_layers = 3, d_layers = [0.022, 0.024, 0.062, 0.262],
-                 lambda_layers = [395, 0.04, 2], h_ir=6700, h_or=100)
+mypipe1    =      cm.pipe(L=15,d_hy=0.022,epsilon=0.011,u_nom=0.5,zeta_instal=10,
+                 N_layers = 2, d_layers = [0.022, 0.024, 0.062],
+                 lambda_layers = [395, 0.04], h_ir=3500, h_or=float('inf'))
+print('pipe1:', mypipe1.R_th_ir)
+mypipe2    =      cm.pipe(L=5,d_hy=0.022,epsilon=0.011,u_nom=0.5,zeta_instal=3.5,
+                 N_layers = 2, d_layers = [0.022, 0.024, 0.062],
+                 lambda_layers = [395, 0.04], h_ir=3500, h_or=float('inf'))
+print('pipe2:', mypipe2.R_th_ir)
 
 # ################################################################################
 
@@ -82,7 +87,7 @@ self.components[edge] = {}
 self.components[edge]['heatexchanger'] = myhx1
 self.components[edge]['pump'] = mypump1
 self.components[edge]['controlvalve'] = myvalve1
-self.components[edge]['pipe'] = mypipe1
+#self.components[edge]['pipe'] = mypipe1
 
 ### ('2h', '2c')
 edge = ('2h', '2c')
@@ -90,7 +95,7 @@ self.components[edge] = {}
 self.components[edge]['heatexchanger'] = myhx1
 self.components[edge]['pump'] = mypump1
 self.components[edge]['controlvalve'] = myvalve1
-self.components[edge]['pipe'] = mypipe1
+#self.components[edge]['pipe'] = mypipe1
 
 ### ('3h', '3c')
 edge = ('3h', '3c')
@@ -98,4 +103,4 @@ self.components[edge] = {}
 self.components[edge]['heatexchanger'] = myhx1
 self.components[edge]['pump'] = mypump1
 self.components[edge]['controlvalve'] = myvalve1
-self.components[edge]['pipe'] = mypipe1
+#self.components[edge]['pipe'] = mypipe1

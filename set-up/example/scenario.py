@@ -1,6 +1,6 @@
 self.scenario   =   {}
 
-self.scenario['T_soil'] = 12 + 273.15
+self.scenario['T_soil'] = 20 + 273.15
 
 self.scenario[1]                        =   {}
 self.scenario[1]['pi']                  =   1

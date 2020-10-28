@@ -243,9 +243,9 @@ class pipe:
     h_or            [W/((m**2)*K)]  heat transfer coefficient at outside of outest pipe layer'''
     
     # Initializer / Instance Attributes
-    def __init__(self, L=15,d_hy=0.022,epsilon=0.011,u_nom=1,zeta_instal=10,
+    def __init__(self, L=15,d_hy=0.022,epsilon=0.011,u_nom=0.5,zeta_instal=10,
                  N_layers = 2, d_layers = [0.022, 0.024, 0.062],
-                 lambda_layers = [395, 0.04], h_ir=6700, h_or=float('inf')):
+                 lambda_layers = [395, 0.04], h_ir=3500, h_or=float('inf')):
     
         # set properties
         self.L          =   L               # pipe length   [m]

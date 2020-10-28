@@ -154,7 +154,10 @@ class hy_prob:
                 Pind = self.setup.PSM.index(P)
                 if self.sigma_mat[i,cntr]*self.mu_vec[Pind]>0:
                     raise ValueError('sigma_mat[i,cntr]*mu_vec[Pind]>0')
-                a_pi_1 = self.setup.components[edge]['pipe'].hy_params(self.setup.myfluid)
+                try:
+                    a_pi_1 = self.setup.components[edge]['pipe'].hy_params(self.setup.myfluid)
+                except:
+                    a_pi_1 = 0
                 a_hx_1 = self.setup.components[edge]['heatexchanger'].hy_params()
                 a_pu_1, a_pu_2 = self.setup.components[edge]['pump'].hy_params()
                 a_va_1 = self.setup.components[edge]['controlvalve'].hy_params(self.setup.myfluid)

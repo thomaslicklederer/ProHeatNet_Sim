@@ -606,6 +606,191 @@ def visualize_th_solution(setup, graph, solutions, th_problem, withsymbols = Fal
     plt.axis('off')
     plt.show(block=False)
     plt.savefig(''.join((savepath, 'vis_solution_th.', saveformat)), format = saveformat)
+    
+def visualize_prosumer_results(setup, graph, solutions, withnumbers=True):
+        # initializations
+        G = graph.G
+        img_valve = mpimg.imread('aux_files/valve_img.png')
+        img_hx = mpimg.imread('aux_files/hx_img.png')
+        img_pump = mpimg.imread('aux_files/pump_img.png')
+        
+        mu_dict = {P: setup.scenario[P]['mu'] for P in setup.PSM}
+        u_dict = {P: setup.scenario[P]['u'] for P in setup.PSM}
+        kappa_dict = {P: setup.scenario[P]['kappa'] for P in setup.PSM}
+        T_sec_dict = {P: setup.scenario[P]['T_sec_in_degree'] for P in setup.PSM}
+        dotV_sec_dict = {P: setup.scenario[P]['dotV_sec_in'] for P in setup.PSM}
+        T_sec_out_dict = {P: setup.scenario[P]['dotV_sec_in'] for P in setup.PSM}
+        T_sec_out_dict = {P: setup.scenario[P]['dotV_sec_in'] for P in setup.PSM}
+        
+        # parameters
+        myfontsize = 14
+        myfigsize=[2*21.0/2.54, 2*12.98/2.54]
+        myarrowstyle = mpltlib.patches.ArrowStyle.CurveFilledAB(head_length=0.6, head_width=0.4) #CurveB, CurveFilledB
+        savepath = './figs/'
+        saveformat = 'png' # jpg, png, eps, svgd
+        
+        # initialize figure
+        fig = plt.figure(num='prosumer_results', figsize=myfigsize)
+        plt.title('prosumer results', {'fontsize': 30,
+            'fontweight' : 'bold'})
+        
+        # set-up node color
+        for node in G.nodes():
+            if 'h' in node:
+                G.nodes[node]['color']='r'
+            if 'c' in node:
+                G.nodes[node]['color']='b'
+        
+        nodes_colors = {node: G.nodes[node]['color'] for node in 
+                        G.nodes()}
+
+        colorslist = list(nodes_colors.values())
+        
+        # draw
+            
+        nx.drawing.nx_pylab.draw(G, 
+                                 pos=setup.coordinates,
+                                 fontsize = 20,
+                                 with_labels=True, node_color = colorslist,
+                                 arrowsize=15, arrowstyle=myarrowstyle,
+                                 node_size=700, width=3,
+                                 font_weight = 'bold', alpha=1)
+        
+        xcoords= [setup.coordinates[node][0]
+                  for node in setup.coordinates]
+        ycoords= [setup.coordinates[node][1]
+                  for node in setup.coordinates]
+        
+        plt.gca().set_xlim(min(xcoords)-30, max(xcoords)+30)
+        plt.gca().set_ylim(min(ycoords)-30, max(ycoords)+30)
+        
+        plt.axis('off')
+        plt.show(block=False)
+        
+
+                
+        for PSM in mu_dict:
+            for i in range(len(setup.e_vec)):
+                edge = setup.e_vec[i]
+                if (str(PSM) in edge[0]) and (str(PSM) in edge[1]):
+                    coord_hx = []
+                    coord_hx.append(setup.coordinates[edge[0]][0]
+                                     +(setup.coordinates[edge[1]][0]-
+                                     setup.coordinates[edge[0]][0])*(1/2))
+                    coord_hx.append(setup.coordinates[edge[0]][1]
+                                     +(setup.coordinates[edge[1]][1]-
+                                       setup.coordinates[edge[0]][1])*(2/5))
+                    coord_act = [coord_hx[0], 
+                                 setup.coordinates[edge[0]][1]
+                                     +(setup.coordinates[edge[1]][1]-
+                                       setup.coordinates[edge[0]][1])*(3/5)]
+                    
+                    coord_act_disp = plt.gca().transData.transform(coord_act)
+                    coord_hx_disp = plt.gca().transData.transform(coord_hx)
+                    
+                    imagebox_hx = OffsetImage(img_hx, zoom=0.1)
+                    ab_hx = AnnotationBbox(imagebox_hx, (coord_hx[0],coord_hx[1]), 
+                                           frameon=False)
+                    plt.gca().add_artist(ab_hx)
+                    
+                    fig.canvas.draw()
+                    renderer = fig.canvas.renderer
+                    inv1=plt.gca().transData.inverted()
+                    inv2=plt.gca().transAxes.inverted()
+                    
+                    U_pump_str=r'$u$ = %4.2f' % (u_dict[PSM])
+                    U_valve_str=r'$\kappa = %4.2f$' % (kappa_dict[PSM])
+                    dotm_sec_str = r'$\dot{V}_{sec} = %4.2f \frac{l}{min}$' % (dotV_sec_dict[PSM])
+                    T_sec_str = r'$T_{sec,in} = %5.1f ^\circ C$' % (T_sec_dict[PSM])
+                    
+                    
+                    myExtend0=imagebox_hx.get_extent(renderer)
+                    xpos_text_disp0a = coord_hx_disp[0]+0.55*myExtend0[0]
+                    xpos_text_disp0b = coord_hx_disp[0]+0.55*myExtend0[0]
+                    xpos_text_disp0c = coord_hx_disp[0]+0.55*myExtend0[0]
+                    xpos_text_disp0d = coord_hx_disp[0]+0.55*myExtend0[0]
+                    ypos_text_disp0a = coord_hx_disp[1]+1.5*myExtend0[0]
+                    ypos_text_disp0b = coord_hx_disp[1]+0.9*myExtend0[0]
+                    ypos_text_disp0c = coord_hx_disp[1]+0.3*myExtend0[0]
+                    ypos_text_disp0d = coord_hx_disp[1]-0.3*myExtend0[0]
+                    coord_text_data0a=inv1.transform((
+                            xpos_text_disp0a,ypos_text_disp0a))
+                    coord_text_data0b=inv1.transform((
+                            xpos_text_disp0b,ypos_text_disp0b))
+                    coord_text_data0c=inv1.transform((
+                            xpos_text_disp0c,ypos_text_disp0c))
+                    coord_text_data0d=inv1.transform((
+                            xpos_text_disp0d,ypos_text_disp0d))
+                    if withnumbers == True:
+                        plt.text(coord_text_data0a[0], coord_text_data0a[1], dotm_sec_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
+                        plt.text(coord_text_data0b[0], coord_text_data0b[1], T_sec_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
+                        plt.text(coord_text_data0c[0], coord_text_data0c[1], T_sec_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
+                        plt.text(coord_text_data0d[0], coord_text_data0d[1], T_sec_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
+                    
+                    if mu_dict[PSM]==1:
+                        
+                        imagebox_pump = OffsetImage(img_pump, zoom=0.19)
+                        myExtend1=imagebox_pump.get_extent(renderer)
+                        xpos_text_disp1 = coord_act_disp[0]+0.55*myExtend1[0]
+                        coord_text_data1=inv1.transform((
+                            xpos_text_disp1,coord_act_disp[1]))
+                        ab_pump = AnnotationBbox(imagebox_pump, 
+                                                 (coord_act[0],coord_act[1]),
+                                                 box_alignment=(0.5, 0.5),
+                                                 pad=0,
+                                                 frameon=False)
+                        plt.gca().add_artist(ab_pump)
+                        if withnumbers == True:
+                        
+                            plt.text(coord_text_data1[0], coord_text_data1[1], U_pump_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
+                    elif mu_dict[PSM]== -1:
+                        # position valve image
+                        imagebox_valve = OffsetImage(img_valve, zoom=0.4)
+                        myExtend2=imagebox_valve.get_extent(renderer)
+                        
+                        xpos_valve_disp = coord_act_disp[0]-0.31*myExtend2[0]
+                        
+                        coord_valve_data=inv1.transform((xpos_valve_disp,
+                                                         coord_act_disp[1]))
+                        #coord_valve_axes=inv2.transform((xpos_valve_disp,coord_act_disp[1]))
+                        
+                        ab_valve = AnnotationBbox(imagebox_valve, 
+                                                  coord_valve_data,
+                                                  box_alignment=(0.5, 0.5),
+                                                  pad=0,
+                                                  frameon=False)
+                                                    #xycoords='axes fraction'
+                        plt.gca().add_artist(ab_valve)
+                        
+                        if withnumbers == True:
+                            # position text for control value U
+                            xpos_text_disp2 = xpos_valve_disp+0.55*myExtend2[0]
+                            coord_text_data2=inv1.transform((
+                                xpos_text_disp2,coord_act_disp[1]))
+                            plt.text(coord_text_data2[0], coord_text_data2[1], U_valve_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
+        
+        plt.axis('off')
+        plt.show(block=False)
+        
+        plt.savefig(''.join((savepath, 'vis_scenario.', saveformat)), format = saveformat)
 
 
     

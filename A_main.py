@@ -27,9 +27,9 @@ plt.close(fig='all')
 ##########################################################
 
 ############################ set-up ########################################
-path_config     =   "set-up/my_set-up/configuration.py"
-path_param      =   "set-up/my_set-up/parametrization.py" 
-path_scenario   =   "set-up/my_set-up/scenario.py"
+path_config     =   "set-up/example/configuration.py"
+path_param      =   "set-up/example/parametrization.py" 
+path_scenario   =   "set-up/example/scenario.py"
 
 mysetup = su.setup(path_config, path_param, path_scenario)
 
@@ -103,6 +103,9 @@ vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, wi
 
 # thermal solution
 vis.visualize_th_solution(mysetup, mygraph, mysolutions, th_model, withsymbols = False, withnumbers = True)
+
+# prosumer solutions
+vis.visualize_prosumer_results(mysetup, mygraph, mysolutions, withnumbers=True)
 
 ############################################################################
 
