@@ -273,23 +273,12 @@ class pipe:
             raise ValueError('Hydraulic diameter must be the same as innerst layer thermal diameter!')
         else:
             pass
-            
-        # h_layers_old = 0
-        # for i in range(self.N_layers):
-                # h_layers_old += ((math.log((self.d_layers[i+1])/(self.d_layers[i])))/
-                # (2*self.lambda_layers[i]))
-        # self.h_layers_old = h_layers_old
         
         h_layers_rev = 0
         for i in range(self.N_layers):
                 h_layers_rev += ((math.log((self.d_layers[i+1])/(self.d_layers[i])))/
                 (2*math.pi*self.lambda_layers[i]))
         self.h_layers_rev = h_layers_rev
-        
-        # k_th_ir_old = (1/self.h_ir +
-                   # self.d_hy * h_layers_old + 
-                   # (self.d_hy/self.d_layers[-1])*(1/self.h_or))**(-1)
-        # self.k_th_ir_old = k_th_ir_old   #[W/((m**2)*K)]
         
         self.k_th_ir = (1/(self.h_ir*math.pi*self.d_layers[0])+
                         h_layers_rev+
@@ -325,11 +314,11 @@ class pipe:
         A_circ = math.pi * self.d_hy * self.L
         
         try:
-            #s_pi = (self.k_th_ir * math.pi * self.d_hy)/(dotV2*fluid.rho_SI * fluid.cp)
-            s_pi = math.sqrt((self.k_th_ir)/(dotV2*fluid.rho_SI * fluid.cp))
-            b_pi_1 = -(1/math.cosh(s_pi*self.L))
-            b_pi_3 = T_soil*(1-(1/math.cosh(s_pi*self.L)))
-            b_pi_2 = 1
+            
+            s_pi = -(self.L/(fluid.rho_SI * fluid.cp_SI * self.R_th_ir * dotV2))
+            b_pi_1 = math.exp(s_pi)
+            b_pi_3 = (math.exp(s_pi)-1)*T_soil
+            b_pi_2 = -1
             
         except:
             s_pi = float('inf')

@@ -423,7 +423,7 @@ def visualize_hy_solution(setup, graph, solutions, withsymbols=False, withnumber
     
     plt.savefig(''.join((savepath, 'vis_solution_hy.', saveformat)), format = saveformat)
     
-def visualize_th_solution(setup, graph, solutions, th_problem, withsymbols = False, withnumbers = True):
+def visualize_th_solution(setup, graph,  solutions, th_problem, withsymbols = False, withnumbers = True):
     '''code by M.Sc. Thomas Licklederer, Technical University of Munich, MSE, all
     rights reserved DESCRIPTION TO BE ADDED'''
     
@@ -435,7 +435,7 @@ def visualize_th_solution(setup, graph, solutions, th_problem, withsymbols = Fal
     Deltap_soldict = solutions['Deltap']
     DeltaT_soldict = solutions['DeltaT']
     T_soldict = solutions['T']
-    Q_soldict = solutions['Q_trnsf']
+    Q_soldict = solutions['Q_trnsf2']
     mu_dict = {P: setup.scenario[P]['mu'] for P in setup.PSM}
     u_dict = {P: setup.scenario[P]['u'] for P in setup.PSM}
     kappa_dict = {P: setup.scenario[P]['kappa'] for P in setup.PSM}
@@ -607,7 +607,7 @@ def visualize_th_solution(setup, graph, solutions, th_problem, withsymbols = Fal
     plt.show(block=False)
     plt.savefig(''.join((savepath, 'vis_solution_th.', saveformat)), format = saveformat)
     
-def visualize_prosumer_results(setup, graph, solutions, withnumbers=True):
+def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=True):
         # initializations
         G = graph.G
         img_valve = mpimg.imread('aux_files/valve_img.png')
@@ -619,8 +619,10 @@ def visualize_prosumer_results(setup, graph, solutions, withnumbers=True):
         kappa_dict = {P: setup.scenario[P]['kappa'] for P in setup.PSM}
         T_sec_dict = {P: setup.scenario[P]['T_sec_in_degree'] for P in setup.PSM}
         dotV_sec_dict = {P: setup.scenario[P]['dotV_sec_in'] for P in setup.PSM}
-        T_sec_out_dict = {P: setup.scenario[P]['dotV_sec_in'] for P in setup.PSM}
-        T_sec_out_dict = {P: setup.scenario[P]['dotV_sec_in'] for P in setup.PSM}
+        Edges_Temps_dict = th_problem.general_stuff['Edges_Temps_dict']
+        Q_soldict = solutions['Q_trnsf2']
+        T_sec_out_dict = {P: solutions['T'][Edges_Temps_dict[P]['T_out_PSM']] for P in setup.PSM}
+        
         
         # parameters
         myfontsize = 14
@@ -702,6 +704,8 @@ def visualize_prosumer_results(setup, graph, solutions, withnumbers=True):
                     U_valve_str=r'$\kappa = %4.2f$' % (kappa_dict[PSM])
                     dotm_sec_str = r'$\dot{V}_{sec} = %4.2f \frac{l}{min}$' % (dotV_sec_dict[PSM])
                     T_sec_str = r'$T_{sec,in} = %5.1f ^\circ C$' % (T_sec_dict[PSM])
+                    T_sec_out_str = r'$T_{sec,out} = %5.1f ^\circ C$' % (T_sec_out_dict[PSM])
+                    dotQ_str = r'$\dot{Q} = %5.1f kW$' % (-Q_soldict[PSM]/1000)
                     
                     
                     myExtend0=imagebox_hx.get_extent(renderer)
@@ -730,11 +734,11 @@ def visualize_prosumer_results(setup, graph, solutions, withnumbers=True):
                                  horizontalalignment='left',
                                  verticalalignment='center',
                                  fontsize = myfontsize)
-                        plt.text(coord_text_data0c[0], coord_text_data0c[1], T_sec_str, 
+                        plt.text(coord_text_data0c[0], coord_text_data0c[1], T_sec_out_str, 
                                  horizontalalignment='left',
                                  verticalalignment='center',
                                  fontsize = myfontsize)
-                        plt.text(coord_text_data0d[0], coord_text_data0d[1], T_sec_str, 
+                        plt.text(coord_text_data0d[0], coord_text_data0d[1], dotQ_str, 
                                  horizontalalignment='left',
                                  verticalalignment='center',
                                  fontsize = myfontsize)
