@@ -32,15 +32,26 @@ A python based simulation framework for the thermohydraulic simulation of prosum
 - results show in command window
 - figures with visualizations of the results should show
 - results are printed to textfile *results.txt* and saved as a python pickle in *results.pkl*
+- results should be the same as in folder *./example_results*
 - export to Excel-file can be done by running *H_toExcel.py*
-```
-run H_toExcel.py
-```
+  ```
+  run H_toExcel.py
+  ```
 
 # How to modify the set-up
 - go to directory *./set-up/example* and copy the three files
 - paste the copied files in folder *./set-up/my_set-up*
-- 
+- modify the set-up by modifying the pasted files *configuration.py*, *parametrization.py* and *scenario.py*
+- modify the paths at the top of *A_main.py*
+  ```
+  path_config     =   "set-up/my_set-up/configuration.py"
+  path_param      =   "set-up/my_set-up/parametrization.py" 
+  path_scenario   =   "set-up/my_set-up/scenario.py"
+  ```
+- run the main file by command shell
+  ```
+  run A_main.py
+  ```
 
 # Requirements
 The code was tested under Linux and under Windows with the following specifications.
