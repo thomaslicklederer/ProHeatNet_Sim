@@ -10,6 +10,7 @@ import sympy as sym
 import gurobipy as gp
 from gurobipy import GRB
 import pprint
+import pickle
 
 import B_setup as su
 import C_network as net
@@ -27,9 +28,9 @@ plt.close(fig='all')
 ##########################################################
 
 ############################ set-up ########################################
-path_config     =   "set-up/my_set-up/configuration.py"
-path_param      =   "set-up/my_set-up/parametrization.py" 
-path_scenario   =   "set-up/my_set-up/scenario.py"
+path_config     =   "set-up/example/configuration.py"
+path_param      =   "set-up/example/parametrization.py" 
+path_scenario   =   "set-up/example/scenario.py"
 
 mysetup = su.setup(path_config, path_param, path_scenario)
 
@@ -74,7 +75,7 @@ pprint.pprint(mysolutions)
 
 ############################################################################
 
-############################ export results to logfile #####################
+############################ export results to logfiles #####################
 
 with open("results.txt", "w") as fout:
     fout.write("########## set-up ##########\n\n")
@@ -87,6 +88,12 @@ with open("results.txt", "w") as fout:
     
     fout.write("\n\n##############################")
     
+myfile = open('results.pkl','wb')
+myresults = {'PSM': mysetup.PSM, 'v_vec': mysetup.v_vec,
+            'e_vec': mysetup.e_vec, 'topology': mysetup.topology,
+            'scenario': mysetup.scenario, 'solutions': mysolutions}
+pickle.dump(myresults, myfile)
+myfile.close()    
 
 ############################################################################
 
@@ -103,6 +110,9 @@ vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, wi
 
 # thermal solution
 vis.visualize_th_solution(mysetup, mygraph, mysolutions, th_model, withsymbols = False, withnumbers = True)
+
+# prosumer solutions
+vis.visualize_prosumer_results(mysetup, mygraph, mysolutions, th_model, withnumbers=True)
 
 ############################################################################
 
