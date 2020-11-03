@@ -39,9 +39,9 @@ dotV_sec_in_vec = list(np.zeros(np.shape(mu_vec)))
 dotV_norm   =   math.pi*((0.022)**2)*(1/4)*1*60*1000 # liters per minute
 for entry in range(len(dotV_sec_in_vec)):
     if mu_vec[entry] == -1:
-        dotV_sec_in_vec[entry]=+14 # +(0.8+0.25*random.uniform(-1.0, 1.0))*dotV_norm
+        dotV_sec_in_vec[entry]=+5 # +(0.8+0.25*random.uniform(-1.0, 1.0))*dotV_norm
     elif mu_vec[entry] == +1:
-        dotV_sec_in_vec[entry]=-14 #-(0.8+0.25*random.uniform(-1.0, 1.0))*dotV_norm
+        dotV_sec_in_vec[entry]=-5 #-(0.8+0.25*random.uniform(-1.0, 1.0))*dotV_norm
  
 #kappa
 kappa_vec = list(np.zeros(np.shape(mu_vec)))

@@ -10,6 +10,7 @@ import sympy as sym
 import gurobipy as gp
 from gurobipy import GRB
 import pprint
+import pickle
 
 import B_setup as su
 import C_network as net
@@ -74,7 +75,7 @@ pprint.pprint(mysolutions)
 
 ############################################################################
 
-############################ export results to logfile #####################
+############################ export results to logfiles #####################
 
 with open("results.txt", "w") as fout:
     fout.write("########## set-up ##########\n\n")
@@ -87,6 +88,12 @@ with open("results.txt", "w") as fout:
     
     fout.write("\n\n##############################")
     
+myfile = open('results.pkl','wb')
+myresults = {'PSM': mysetup.PSM, 'v_vec': mysetup.v_vec,
+            'e_vec': mysetup.e_vec, 'topology': mysetup.topology,
+            'scenario': mysetup.scenario, 'solutions': mysolutions}
+pickle.dump(myresults, myfile)
+myfile.close()    
 
 ############################################################################
 

@@ -602,6 +602,51 @@ def visualize_th_solution(setup, graph,  solutions, th_problem, withsymbols = Fa
                             arrowsize=15, arrowstyle=myarrowstyle,
                             node_size=700, width=3,
                             font_weight = 'normal', alpha=1)
+                            
+        for PSM in mu_dict:
+            for i in range(len(setup.e_vec)):
+                edge = setup.e_vec[i]
+                if (str(PSM) in edge[0]) and (str(PSM) in edge[1]):
+                    coord_hx = []
+                    coord_hx.append(setup.coordinates[edge[0]][0]
+                                    +(setup.coordinates[edge[1]][0]-
+                                    setup.coordinates[edge[0]][0])*(1/2))
+                    coord_hx.append(setup.coordinates[edge[0]][1]
+                                    +(setup.coordinates[edge[1]][1]-
+                                    setup.coordinates[edge[0]][1])*(2/5))
+                                    
+                    coord_hx_disp = plt.gca().transData.transform(coord_hx)
+                    
+                    imagebox_hx = OffsetImage(img_hx, zoom=0.1)
+
+                    fig1.canvas.draw()
+                    renderer = fig1.canvas.renderer
+                    inv1=plt.gca().transData.inverted()
+                    inv2=plt.gca().transAxes.inverted()
+        
+                    T_netw_h_str =  r'$T_{%1.0f h} = %5.1f ^\circ C$' % (PSM, T_soldict[edge])
+                    T_netw_c_str =  r'$T_{%1.0f c} = %5.1f ^\circ C$' % (PSM, T_soldict[(edge[1],edge[0])])
+                    
+                    myExtend0=imagebox_hx.get_extent(renderer)
+                    xpos_text_disp0a = coord_hx_disp[0]+0.2*myExtend0[0]
+                    xpos_text_disp0b = coord_hx_disp[0]+0.2*myExtend0[0]
+                    ypos_text_disp0a = coord_hx_disp[1]+1.0*myExtend0[0]
+                    ypos_text_disp0b = coord_hx_disp[1]-2.8*myExtend0[0]
+                    coord_text_data0a=inv1.transform((
+                            xpos_text_disp0a,ypos_text_disp0a))
+                    coord_text_data0b=inv1.transform((
+                            xpos_text_disp0b,ypos_text_disp0b))
+                    
+                    plt.text(coord_text_data0a[0], coord_text_data0a[1], T_netw_h_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
+                    plt.text(coord_text_data0b[0], coord_text_data0b[1], T_netw_c_str, 
+                                 horizontalalignment='left',
+                                 verticalalignment='center',
+                                 fontsize = myfontsize)
+                    
+                    
     
     plt.axis('off')
     plt.show(block=False)
