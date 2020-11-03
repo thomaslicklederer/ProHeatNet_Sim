@@ -20,7 +20,7 @@ def visualize_graph(setup, graph, solutions):
         myfontsize = 20
         myfigsize=[2*21.0/2.54, 2*12.98/2.54]
         myarrowstyle = mpltlib.patches.ArrowStyle.CurveB(head_length=0.6, head_width=0.4) #CurveB, CurveFilledAB
-        savepath = './figs/'
+        savepath = './results/'
         saveformat = 'png' # jpg, png, eps, svgd
         
         # initialize figure
@@ -80,7 +80,7 @@ def visualize_scenario(setup, graph, solutions, withnumbers=True):
         myfontsize = 20
         myfigsize=[2*21.0/2.54, 2*12.98/2.54]
         myarrowstyle = mpltlib.patches.ArrowStyle.CurveFilledAB(head_length=0.6, head_width=0.4) #CurveB, CurveFilledB
-        savepath = './figs/'
+        savepath = './results/'
         saveformat = 'png' # jpg, png, eps, svgd
         
         # initialize figure
@@ -230,7 +230,7 @@ def visualize_scenario(setup, graph, solutions, withnumbers=True):
         plt.savefig(''.join((savepath, 'vis_scenario.', saveformat)), format = saveformat)
     
 def visualize_hy_solution(setup, graph, solutions, withsymbols=False, withnumbers = True, data = 'flow'):
-    savepath = './figs/'
+    savepath = './results/'
     saveformat = 'png' # jpg, png, eps, svgd
     
     # combine the solution values with the correct edges
@@ -427,7 +427,7 @@ def visualize_th_solution(setup, graph,  solutions, th_problem, withsymbols = Fa
     '''code by M.Sc. Thomas Licklederer, Technical University of Munich, MSE, all
     rights reserved DESCRIPTION TO BE ADDED'''
     
-    savepath = './figs/'
+    savepath = './results/'
     saveformat = 'png' # jpg, png, eps, svgd
     
     # combine the solution values with the correct edges
@@ -673,7 +673,7 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
         myfontsize = 14
         myfigsize=[2*21.0/2.54, 2*12.98/2.54]
         myarrowstyle = mpltlib.patches.ArrowStyle.CurveFilledAB(head_length=0.6, head_width=0.4) #CurveB, CurveFilledB
-        savepath = './figs/'
+        savepath = './results/'
         saveformat = 'png' # jpg, png, eps, svgd
         
         # initialize figure
@@ -839,7 +839,7 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
         plt.axis('off')
         plt.show(block=False)
         
-        plt.savefig(''.join((savepath, 'vis_scenario.', saveformat)), format = saveformat)
+        plt.savefig(''.join((savepath, 'vis_prosumer_res.', saveformat)), format = saveformat)
 
 
     

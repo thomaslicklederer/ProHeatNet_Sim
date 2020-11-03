@@ -77,7 +77,7 @@ pprint.pprint(mysolutions)
 
 ############################ export results to logfiles #####################
 
-with open("results.txt", "w") as fout:
+with open("results/results.txt", "w") as fout:
     fout.write("########## set-up ##########\n\n")
     
     fout.write(pprint.pformat(vars(mysetup)))
@@ -88,7 +88,7 @@ with open("results.txt", "w") as fout:
     
     fout.write("\n\n##############################")
     
-myfile = open('results.pkl','wb')
+myfile = open('results/results.pkl','wb')
 myresults = {'PSM': mysetup.PSM, 'v_vec': mysetup.v_vec,
             'e_vec': mysetup.e_vec, 'topology': mysetup.topology,
             'scenario': mysetup.scenario, 'solutions': mysolutions}
