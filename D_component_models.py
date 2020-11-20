@@ -292,10 +292,26 @@ class pipe:
         A_hy    =   (1.0/4.0) * math.pi * (self.d_hy**2) # [m^2]
         
         Re_nom  =   (fluid.rho_SI * self.u_nom * self.d_hy) / (fluid.mu_SI)   #   [-]
+        print(Re_nom)
         
-        # moody equation
-        f_D   =   0.0055 * (1+(2*(10**4)*(self.epsilon/self.d_hy)+(10**6/
-        Re_nom))**(1.0/3.0))     # [-]
+        if Re_nom <= 2000: #Hagen-Poiseuille flow
+            f_D = 64 / Re_nom
+        elif Re_nom >= 4000:# Swamee and Jain 1976;
+            f_D = 0.25/((math.log10((self.epsilon/(3.7*self.d_hy))+(5.74/(Re_nom**0.9))))**2)
+        elif ( Re_nom >2000 ) and ( Re_nom < 4000 ): # transition region, linear interpolation between laminar and turbulent
+            x1 = 2000
+            x2 = 4000
+            y1 = 64 / x1
+            y2 = 0.25/((math.log10((self.epsilon/(3.7*self.d_hy))+(5.74/(x2**0.9))))**2)
+            m = (y2-y1)/(x2-x1)
+            t = y1 - m * x1
+            f_D = m * Re_nom + t
+        
+        print(f_D)
+        
+        # moody equation - old, artifact
+        # f_D   =   0.0055 * (1+(2*(10**4)*(self.epsilon/self.d_hy)+(10**6/
+        # Re_nom))**(1.0/3.0))     # [-]
         
         # hydralic resistance of pipe
         a_pi_1    =   -(8/(math.pi**2))*fluid.rho_SI*(1/(self.d_hy**4))*\
