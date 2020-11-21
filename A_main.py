@@ -28,9 +28,9 @@ plt.close(fig='all')
 ##########################################################
 
 ############################ set-up ########################################
-path_config     =   "set-up/example/configuration.py"
-path_param      =   "set-up/example/parametrization.py" 
-path_scenario   =   "set-up/example/scenario.py"
+path_config     =   "setup/example/configuration.py"
+path_param      =   "setup/example/parametrization.py" 
+path_scenario   =   "setup/example/scenario.py"
 
 mysetup = su.setup(path_config, path_param, path_scenario)
 

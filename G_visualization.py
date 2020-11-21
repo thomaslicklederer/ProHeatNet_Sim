@@ -654,7 +654,7 @@ def visualize_th_solution(setup, graph,  solutions, th_problem, withsymbols = Fa
     
 def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=True):
         # initializations
-        G = graph.G
+
         img_valve = mpimg.imread('aux_files/valve_img.png')
         img_hx = mpimg.imread('aux_files/hx_img.png')
         img_pump = mpimg.imread('aux_files/pump_img.png')
@@ -667,6 +667,7 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
         Edges_Temps_dict = th_problem.general_stuff['Edges_Temps_dict']
         Q_soldict = solutions['Q_trnsf2']
         T_sec_out_dict = {P: solutions['T'][Edges_Temps_dict[P]['T_out_PSM']] for P in setup.PSM}
+        dotV_soldict = solutions['dotV']
         
         
         # parameters
@@ -680,6 +681,21 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
         fig = plt.figure(num='prosumer_results', figsize=myfigsize)
         plt.title('prosumer results', {'fontsize': 30,
             'fontweight' : 'bold'})
+        
+        ## initialize new Graph that represents the solution
+        G = nx.DiGraph()
+        G.add_nodes_from(setup.v_vec)
+        myedgelabels = {}
+        for i in range(len(setup.e_vec)):
+            edge = setup.e_vec[i]
+            if np.sign(dotV_soldict[edge])==-1:
+                G.add_edge(edge[1],edge[0])
+            elif np.sign(dotV_soldict[edge])==1:
+                G.add_edge(edge[0],edge[1])
+            elif np.sign(dotV_soldict[edge])==0:
+                G.add_edge(edge[0],edge[1])
+            else:
+                raise ValueError('')
         
         # set-up node color
         for node in G.nodes():

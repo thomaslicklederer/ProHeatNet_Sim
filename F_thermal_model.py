@@ -273,7 +273,7 @@ class th_prob:
             if ('h' in temp_diff[0] and 'h' in temp_diff[1]) or ('c' in temp_diff[0] and 'c' in temp_diff [1]):
                 Edges_Temps_dict[temp_diff]={}
                 signum = np.sign(dotV_dict[temp_diff])
-                if signum == 1:
+                if (signum == 1) or (signum == 0):
                     Edges_Temps_dict[temp_diff]['T_in'] = temp_diff
                     Edges_Temps_dict[temp_diff]['T_out'] = (temp_diff[1], temp_diff[0])
                 elif signum == -1:

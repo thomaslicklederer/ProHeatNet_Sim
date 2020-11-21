@@ -292,7 +292,6 @@ class pipe:
         A_hy    =   (1.0/4.0) * math.pi * (self.d_hy**2) # [m^2]
         
         Re_nom  =   (fluid.rho_SI * self.u_nom * self.d_hy) / (fluid.mu_SI)   #   [-]
-        print(Re_nom)
         
         if Re_nom <= 2000: #Hagen-Poiseuille flow
             f_D = 64 / Re_nom
@@ -306,8 +305,6 @@ class pipe:
             m = (y2-y1)/(x2-x1)
             t = y1 - m * x1
             f_D = m * Re_nom + t
-        
-        print(f_D)
         
         # moody equation - old, artifact
         # f_D   =   0.0055 * (1+(2*(10**4)*(self.epsilon/self.d_hy)+(10**6/
