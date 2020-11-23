@@ -112,7 +112,7 @@ vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, wi
 vis.visualize_th_solution(mysetup, mygraph, mysolutions, th_model, withsymbols = False, withnumbers = True)
 
 # prosumer solutions
-vis.visualize_prosumer_results(mysetup, mygraph, mysolutions, th_model, withnumbers=True)
+vis.visualize_prosumer_results(mysetup, mygraph, mysolutions, th_model, withnumbers=False)
 
 ############################################################################
 

@@ -8,5 +8,5 @@ self.M = 3
 self.topology = [(1,2), (2,3)]
 
 ## coordinates of nodes - just for visualization purposes
-self.coordinates = {'2h': [35,80], '2c':[35,10], '3h': [60,105], '3c': 
-                        [60,35], '1h': [10,105],'1c':[10,35]}
+self.coordinates = {'1h': [10,60], '1c':[10,10], '2h': [60,60], '2c': 
+                        [60,10], '3h': [110,60], '3c':[110,10]}

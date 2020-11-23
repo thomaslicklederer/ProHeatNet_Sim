@@ -671,16 +671,11 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
         
         
         # parameters
-        myfontsize = 14
+        myfontsize = 20
         myfigsize=[2*21.0/2.54, 2*12.98/2.54]
         myarrowstyle = mpltlib.patches.ArrowStyle.CurveFilledAB(head_length=0.6, head_width=0.4) #CurveB, CurveFilledB
         savepath = './results/'
         saveformat = 'png' # jpg, png, eps, svgd
-        
-        # initialize figure
-        fig = plt.figure(num='prosumer_results', figsize=myfigsize)
-        plt.title('prosumer results', {'fontsize': 30,
-            'fontweight' : 'bold'})
         
         ## initialize new Graph that represents the solution
         G = nx.DiGraph()
@@ -696,6 +691,11 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
                 G.add_edge(edge[0],edge[1])
             else:
                 raise ValueError('')
+        
+        # initialize figure
+        fig = plt.figure(num='prosumer_results', figsize=myfigsize)
+        plt.title('prosumer results', {'fontsize': 30,
+            'fontweight' : 'bold'})
         
         # set-up node color
         for node in G.nodes():
@@ -716,7 +716,7 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
                                  fontsize = 20,
                                  with_labels=True, node_color = colorslist,
                                  arrowsize=15, arrowstyle=myarrowstyle,
-                                 node_size=700, width=3,
+                                 node_size=900, width=3,
                                  font_weight = 'bold', alpha=1)
         
         xcoords= [setup.coordinates[node][0]
@@ -774,10 +774,10 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
                     xpos_text_disp0b = coord_hx_disp[0]+0.55*myExtend0[0]
                     xpos_text_disp0c = coord_hx_disp[0]+0.55*myExtend0[0]
                     xpos_text_disp0d = coord_hx_disp[0]+0.55*myExtend0[0]
-                    ypos_text_disp0a = coord_hx_disp[1]+1.5*myExtend0[0]
-                    ypos_text_disp0b = coord_hx_disp[1]+0.9*myExtend0[0]
+                    ypos_text_disp0a = coord_hx_disp[1]+1.9*myExtend0[0]
+                    ypos_text_disp0b = coord_hx_disp[1]+1.1*myExtend0[0]
                     ypos_text_disp0c = coord_hx_disp[1]+0.3*myExtend0[0]
-                    ypos_text_disp0d = coord_hx_disp[1]-0.3*myExtend0[0]
+                    ypos_text_disp0d = coord_hx_disp[1]-0.5*myExtend0[0]
                     coord_text_data0a=inv1.transform((
                             xpos_text_disp0a,ypos_text_disp0a))
                     coord_text_data0b=inv1.transform((
