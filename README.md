@@ -1,5 +1,6 @@
 # ProHeatNet_Sim
 A python based simulation framework for the thermohydraulic simulation of prosumer-dominated heat networks.
+The model on which this simulation framework is built on is described in the Paper "Thermohydraulic Model of Smart Thermal Grids with Bidirectional Power Flow between Prosumers". A preprint is submitted to Energy - The International Journal by Elsevier and under revision. The preprint can be found on researchgate: https://doi.org/10.13140/RG.2.2.16914.68803
 
 # How to run the example
 - Download / clone the latest release.
