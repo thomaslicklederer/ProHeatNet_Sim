@@ -49,7 +49,7 @@ The model on which this simulation framework is built on is described in the Pap
   ```
   run A_main.py
   ```
-## Examplary result plots
+# Examplary result plots
 ![Solutions on prosumer level](./example_results/vis_prosumer_res.png)
 ![Solutions on prosumer level](./example_results/vis_solution_hy.png)
 
