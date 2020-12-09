@@ -6,7 +6,7 @@
 # #keyword == '3_circ':
 # self.M = 3
 # self.topology = [(1,2), (2,3), (3,1)]
-# self.coordinates = {'3h': [35,80], '3c':[35,10], '2h': [60,105], '2c': 
+# self.coordinates = {'2h': [35,80], '2c':[35,10], '3h': [60,105], '3c': 
                         # [60,35], '1h': [10,105],'1c':[10,35]}
 # keyword == '3_lin':
 self.M = 3

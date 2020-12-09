@@ -4,7 +4,7 @@ The model on which this simulation framework is built on is described in the Pap
 
 # How to run the example
 - Download / clone the latest release.
-- Make sure our system meets the requirements (see below):
+- Make sure your system meets the requirements (see below):
   - python 3.7 or higher installed
   - Gurobi optimizer version 9.0.1 or higher installed
   - suitable license for Gurobi
@@ -28,31 +28,30 @@ The model on which this simulation framework is built on is described in the Pap
   ```
   run A_main.py
   ```
-- the example set-up in directory *./set-up/example* will be used
+- the example setup in directory *./setup/example* will be used
 - calculation starts
 - results show in command window
 - figures with visualizations of the results should show
-- results are printed to textfile *results.txt* and saved as a python pickle in *results.pkl*
+- results are saved in the *results* folder printed to textfile *results.txt* and saved as a python pickle in *results.pkl*, also an Excel-Spreadsheet is created *example_202XXXXX_XXXXXX.xlsx*
 - results should be the same as in folder *./example_results*
-- export to Excel-file can be done by running *H_toExcel.py*
-  ```
-  run H_toExcel.py
-  ```
 
-# How to modify the set-up
-- go to directory *./set-up/example* and copy the three files
-- paste the copied files in folder *./set-up/my_set-up*
-- modify the set-up by modifying the pasted files *configuration.py*, *parametrization.py* and *scenario.py*
+# How to modify the setup
+- go to directory *./setup/example* and copy the three files
+- paste the copied files in folder *./setup/my_setup*
+- modify the setup by modifying the pasted files *configuration.py*, *parametrization.py* and *scenario.py*
 - modify the paths at the top of *A_main.py*
   ```
-  path_config     =   "set-up/my_set-up/configuration.py"
-  path_param      =   "set-up/my_set-up/parametrization.py" 
-  path_scenario   =   "set-up/my_set-up/scenario.py"
+  path_config     =   "set-up/my_setup/configuration.py"
+  path_param      =   "set-up/my_setup/parametrization.py" 
+  path_scenario   =   "set-up/my_setup/scenario.py"
   ```
 - run the main file by command shell
   ```
   run A_main.py
   ```
+# Examplary result plots
+![Solutions on prosumer level](./example_results/vis_prosumer_res.png)
+![Solutions on prosumer level](./example_results/vis_solution_hy.png)
 
 # Requirements
 The code was tested under Linux and under Windows with the following specifications.

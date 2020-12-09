@@ -654,7 +654,7 @@ def visualize_th_solution(setup, graph,  solutions, th_problem, withsymbols = Fa
     
 def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=True):
         # initializations
-        G = graph.G
+
         img_valve = mpimg.imread('aux_files/valve_img.png')
         img_hx = mpimg.imread('aux_files/hx_img.png')
         img_pump = mpimg.imread('aux_files/pump_img.png')
@@ -667,14 +667,30 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
         Edges_Temps_dict = th_problem.general_stuff['Edges_Temps_dict']
         Q_soldict = solutions['Q_trnsf2']
         T_sec_out_dict = {P: solutions['T'][Edges_Temps_dict[P]['T_out_PSM']] for P in setup.PSM}
+        dotV_soldict = solutions['dotV']
         
         
         # parameters
-        myfontsize = 14
+        myfontsize = 20
         myfigsize=[2*21.0/2.54, 2*12.98/2.54]
         myarrowstyle = mpltlib.patches.ArrowStyle.CurveFilledAB(head_length=0.6, head_width=0.4) #CurveB, CurveFilledB
         savepath = './results/'
         saveformat = 'png' # jpg, png, eps, svgd
+        
+        ## initialize new Graph that represents the solution
+        G = nx.DiGraph()
+        G.add_nodes_from(setup.v_vec)
+        myedgelabels = {}
+        for i in range(len(setup.e_vec)):
+            edge = setup.e_vec[i]
+            if np.sign(dotV_soldict[edge])==-1:
+                G.add_edge(edge[1],edge[0])
+            elif np.sign(dotV_soldict[edge])==1:
+                G.add_edge(edge[0],edge[1])
+            elif np.sign(dotV_soldict[edge])==0:
+                G.add_edge(edge[0],edge[1])
+            else:
+                raise ValueError('')
         
         # initialize figure
         fig = plt.figure(num='prosumer_results', figsize=myfigsize)
@@ -700,7 +716,7 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
                                  fontsize = 20,
                                  with_labels=True, node_color = colorslist,
                                  arrowsize=15, arrowstyle=myarrowstyle,
-                                 node_size=700, width=3,
+                                 node_size=900, width=3,
                                  font_weight = 'bold', alpha=1)
         
         xcoords= [setup.coordinates[node][0]
@@ -758,10 +774,10 @@ def visualize_prosumer_results(setup, graph, solutions, th_problem, withnumbers=
                     xpos_text_disp0b = coord_hx_disp[0]+0.55*myExtend0[0]
                     xpos_text_disp0c = coord_hx_disp[0]+0.55*myExtend0[0]
                     xpos_text_disp0d = coord_hx_disp[0]+0.55*myExtend0[0]
-                    ypos_text_disp0a = coord_hx_disp[1]+1.5*myExtend0[0]
-                    ypos_text_disp0b = coord_hx_disp[1]+0.9*myExtend0[0]
+                    ypos_text_disp0a = coord_hx_disp[1]+1.9*myExtend0[0]
+                    ypos_text_disp0b = coord_hx_disp[1]+1.1*myExtend0[0]
                     ypos_text_disp0c = coord_hx_disp[1]+0.3*myExtend0[0]
-                    ypos_text_disp0d = coord_hx_disp[1]-0.3*myExtend0[0]
+                    ypos_text_disp0d = coord_hx_disp[1]-0.5*myExtend0[0]
                     coord_text_data0a=inv1.transform((
                             xpos_text_disp0a,ypos_text_disp0a))
                     coord_text_data0b=inv1.transform((

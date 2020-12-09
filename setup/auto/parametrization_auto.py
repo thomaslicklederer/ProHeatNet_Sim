@@ -45,6 +45,8 @@ mypipe1    =      cm.pipe()
 
 # ################################################################################
 
+# define fluid
+self.myfluid    =   myfluid
 # define components for each edge automatically
 self.components =      {}
 for edge in e_vec:
