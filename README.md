@@ -37,6 +37,7 @@ The model on which this simulation framework is built on is described in the Pap
 
 ## Examplary result plots
 ![Solutions on prosumer level](./example_results/vis_prosumer_res.png)
+![Solutions on prosumer level](./example_results/vis_solution_hy.png)
 
 # How to modify the setup
 - go to directory *./setup/example* and copy the three files
