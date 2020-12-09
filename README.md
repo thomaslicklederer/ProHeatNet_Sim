@@ -35,10 +35,6 @@ The model on which this simulation framework is built on is described in the Pap
 - results are saved in the *results* folder printed to textfile *results.txt* and saved as a python pickle in *results.pkl*, also an Excel-Spreadsheet is created *example_202XXXXX_XXXXXX.xlsx*
 - results should be the same as in folder *./example_results*
 
-## Examplary result plots
-![Solutions on prosumer level](./example_results/vis_prosumer_res.png)
-![Solutions on prosumer level](./example_results/vis_solution_hy.png)
-
 # How to modify the setup
 - go to directory *./setup/example* and copy the three files
 - paste the copied files in folder *./setup/my_setup*
@@ -53,6 +49,9 @@ The model on which this simulation framework is built on is described in the Pap
   ```
   run A_main.py
   ```
+## Examplary result plots
+![Solutions on prosumer level](./example_results/vis_prosumer_res.png)
+![Solutions on prosumer level](./example_results/vis_solution_hy.png)
 
 # Requirements
 The code was tested under Linux and under Windows with the following specifications.
