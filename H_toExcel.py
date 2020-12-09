@@ -14,7 +14,7 @@ def excelexport(setup_name):
 
 
     # parameters
-    case_name = '%s_%s' % (setup_name, date_time)
+    case_name = setup_name
 
     # load data from pickle file
     myfile = open('results/results.pkl', 'rb')
