@@ -27,7 +27,7 @@ self.scenario[3]['T_sec_in_degree']     =   65  # [°C]
 self.scenario[3]['T_sec_in']            =   self.scenario[3]['T_sec_in_degree'] + 273.15 # [K]
 self.scenario[3]['dotV_sec_in']         =   -5 # [l / min]
 self.scenario[3]['kappa']               =   0
-self.scenario[3]['u']                   =   0.7
+self.scenario[3]['u']                   =   0.8
 
 
 

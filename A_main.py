@@ -17,6 +17,7 @@ import C_network as net
 import E_hydraulic_model as hm
 import F_thermal_model as tm
 import G_visualization as vis
+import H_toExcel as ex
 
 ################ delete old data #########################
 get_ipython().magic('reset -f')
@@ -27,10 +28,12 @@ else:
 plt.close(fig='all')
 ##########################################################
 
+setup_name = "example"
+
 ############################ set-up ########################################
-path_config     =   "setup/example/configuration.py"
-path_param      =   "setup/example/parametrization.py" 
-path_scenario   =   "setup/example/scenario.py"
+path_config     =   "setup/example/configuration_example.py"
+path_param      =   "setup/example/parametrization_example.py" 
+path_scenario   =   "setup/example/scenario_example.py"
 
 mysetup = su.setup(path_config, path_param, path_scenario)
 
@@ -76,7 +79,7 @@ pprint.pprint(mysolutions)
 ############################################################################
 
 ############################ export results to logfiles #####################
-
+# textfile
 with open("results/results.txt", "w") as fout:
     fout.write("########## set-up ##########\n\n")
     
@@ -88,12 +91,16 @@ with open("results/results.txt", "w") as fout:
     
     fout.write("\n\n##############################")
     
+#pickle
 myfile = open('results/results.pkl','wb')
 myresults = {'PSM': mysetup.PSM, 'v_vec': mysetup.v_vec,
             'e_vec': mysetup.e_vec, 'topology': mysetup.topology,
             'scenario': mysetup.scenario, 'solutions': mysolutions}
 pickle.dump(myresults, myfile)
-myfile.close()    
+myfile.close()   
+
+#excel
+ex.excelexport(setup_name)
 
 ############################################################################
 
@@ -112,7 +119,7 @@ vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, wi
 vis.visualize_th_solution(mysetup, mygraph, mysolutions, th_model, withsymbols = False, withnumbers = True)
 
 # prosumer solutions
-vis.visualize_prosumer_results(mysetup, mygraph, mysolutions, th_model, withnumbers=False)
+vis.visualize_prosumer_results(mysetup, mygraph, mysolutions, th_model, withnumbers=True)
 
 ############################################################################
 
