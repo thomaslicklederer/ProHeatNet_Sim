@@ -10,7 +10,7 @@ date_time = now.strftime("%Y%m%d_%H%M%S")
 standarddir = os.getcwd()
 
 # set base case 
-basecase = "A"
+basecase = "B"
 path_config     =   "simulationcases/%s/setup/configuration.py" % basecase
 path_param      =   "simulationcases/%s/setup/parametrization.py" % basecase
 path_res = "simulationcases/%s/results/" % (basecase)
