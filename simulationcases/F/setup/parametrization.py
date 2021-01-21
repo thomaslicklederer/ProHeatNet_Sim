@@ -78,15 +78,15 @@ edge = ('2c', '3c')
 self.components[edge] = {}
 self.components[edge]['pipe'] = mypipe1
 
-# ### ('1h', '3h')
-# edge = ('1h', '3h')
-# self.components[edge] = {}
-# self.components[edge]['pipe'] = mypipe1
+### ('1h', '3h')
+edge = ('1h', '3h')
+self.components[edge] = {}
+self.components[edge]['pipe'] = mypipe1
 
-# ### ('1c', '3c')
-# edge = ('1c', '3c')
-# self.components[edge] = {}
-# self.components[edge]['pipe'] = mypipe1
+### ('1c', '3c')
+edge = ('1c', '3c')
+self.components[edge] = {}
+self.components[edge]['pipe'] = mypipe1
 
 ## components in the edges with the substations (prosumers)
 ### ('1h', '1c')
