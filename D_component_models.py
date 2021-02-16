@@ -377,11 +377,13 @@ class pump:
     Deltap_ref_1    [hPa]           pressure difference ref. oper. state 1
     u_ref_2         [-]             controll variable ref. oper. state 2
     dotV_ref_2      [l/min]         volume flow ref. oper. state 2
-    Deltap_ref_2    [hPa]           pressure difference ref. oper. state 2'''
+    Deltap_ref_2    [hPa]           pressure difference ref. oper. state 2
+    check_valve     [-]             indicator whether pump has a check valve in serial
+    K_vs_cv         [m³/h]          flow coefficient of check valve in flow direction'''
     
     # Initializer / Instance Attributes
     def __init__(self, n_nom=4100, u_ref_1=1, dotV_ref_1=0, Deltap_ref_1=402.21, 
-                    u_ref_2=1, dotV_ref_2=55.33, Deltap_ref_2=0 ):
+                    u_ref_2=1, dotV_ref_2=55.33, Deltap_ref_2=0, check_valve = True, K_vs_cv = 6):
             
         self.n_nom  =   n_nom
         self.u_ref_1    =   u_ref_1
@@ -390,13 +392,19 @@ class pump:
         self.u_ref_2    =   u_ref_2
         self.dotV_ref_2 =   dotV_ref_2
         self.Deltap_ref_2   =   Deltap_ref_2
+        self.K_vs_cv = K_vs_cv
+        self.check_valve = check_valve
     
-    def hy_params(self):
+    def hy_params(self, fluid):
         
         a_pu_1  =   (self.Deltap_ref_1-((self.u_ref_1/self.u_ref_2)**2)*self.Deltap_ref_2)/\
             ((self.dotV_ref_1**2)-((self.u_ref_1/self.u_ref_2)**2)*(self.dotV_ref_2**2))
                     
         a_pu_2  =   (1/(self.u_ref_2**2))*(self.Deltap_ref_2-(self.dotV_ref_2**2)*a_pu_1)
+        
+        if self.check_valve==True:
+            a_cv = - (1/(self.K_vs_cv*1000/60)**2) * (fluid.rho/1000) * (10**3)
+            a_pu_1 = a_pu_1 + a_cv
         
         self.a_pu_1 = a_pu_1
         self.a_pu_2 = a_pu_2

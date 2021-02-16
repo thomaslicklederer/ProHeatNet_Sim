@@ -159,7 +159,7 @@ class hy_prob:
                 except:
                     a_pi_1 = 0
                 a_hx_1 = self.setup.components[edge]['heatexchanger'].hy_params()
-                a_pu_1, a_pu_2 = self.setup.components[edge]['pump'].hy_params()
+                a_pu_1, a_pu_2 = self.setup.components[edge]['pump'].hy_params(self.setup.myfluid)
                 a_va_1 = self.setup.components[edge]['controlvalve'].hy_params(self.setup.myfluid)
                 gamma_minus = 0.5*(1-self.mu_vec[Pind])
                 gamma_plus = 0.5*(1+self.mu_vec[Pind])

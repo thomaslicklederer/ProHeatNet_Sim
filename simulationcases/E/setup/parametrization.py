@@ -16,7 +16,7 @@ myfluid         =   cm.fluid(rho=1000, cp=4200, mu=(1.0016*(10**(-3))))
 ###         dotV_ref_2      [l/min]         volume flow ref. oper. state 2
 ###         Deltap_ref_2    [hPa]           pressure difference ref. oper. state 2
 mypump1     =      cm.pump(n_nom=4100, u_ref_1=1, dotV_ref_1=0, Deltap_ref_1=402.21, 
-                    u_ref_2=1, dotV_ref_2=55.33, Deltap_ref_2=0)
+                    u_ref_2=1, dotV_ref_2=55.33, Deltap_ref_2=0, check_valve = True, K_vs_cv = 6)
                     
 ## control valves
 ###         K_vs            [(m**3)/h]      Flow coefficient at full opening
