@@ -28,12 +28,12 @@ else:
 plt.close(fig='all')
 ##########################################################
 
-# setup_name = "example"
+setup_name = "CISBAT"
 
 # ############################ set-up ########################################
-# path_config     =   "setup/example/configuration_example.py"
-# path_param      =   "setup/example/parametrization_example.py" 
-# path_scenario   =   "setup/example/scenario_example.py"
+path_config     =   "setup/example/configuration_example.py"
+path_param      =   "setup/example/parametrization_example.py" 
+path_scenario   =   "setup/example/scenario_example.py"
 
 mysetup = su.setup(path_config, path_param, path_scenario)
 
@@ -106,20 +106,20 @@ ex.excelexport(setup_name)
 
 ############################ visualization #################################
 
-# # graph
-# vis.visualize_graph(mysetup, mygraph, mysolutions)
+# graph
+vis.visualize_graph(mysetup, mygraph, mysolutions)
 
-# # scenario
-# vis.visualize_scenario(mysetup, mygraph, mysolutions, withnumbers=True)
+# scenario
+vis.visualize_scenario(mysetup, mygraph, mysolutions, withnumbers=True)
 
-# # hydraulic solution
-# vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, withnumbers = True, data = 'both')
+# hydraulic solution
+vis.visualize_hy_solution(mysetup, mygraph, mysolutions, withsymbols = False, withnumbers = True, data = 'both')
 
-# # thermal solution
-# vis.visualize_th_solution(mysetup, mygraph, mysolutions, th_model, withsymbols = False, withnumbers = True)
+# thermal solution
+vis.visualize_th_solution(mysetup, mygraph, mysolutions, th_model, withsymbols = False, withnumbers = True)
 
-# # prosumer solutions
-# vis.visualize_prosumer_results(mysetup, mygraph, mysolutions, th_model, withnumbers=True)
+# prosumer solutions
+vis.visualize_prosumer_results(mysetup, mygraph, mysolutions, th_model, withnumbers=True)
 
 ############################################################################
 
